@@ -4,23 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mój Livescore</title>
-  
   <script src="https://widgets.api-sports.io/football.js"></script>
 
   <style>
-    body {
-      background-color: #0f0f0f;
-      color: #eeeeee;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 15px;
+    body { 
+      background: #0f0f0f; 
+      color: #eee; 
+      font-family: Arial, sans-serif; 
+      padding: 20px; 
+      margin: 0; 
     }
-    h1 { text-align: center; margin: 20px 0 30px 0; }
-    .widget-box {
-      background-color: #1a1a1a;
-      border-radius: 12px;
-      padding: 15px;
-      margin-bottom: 25px;
+    h1 { text-align: center; margin: 30px 0; }
+    .box { 
+      background: #1a1a1a; 
+      padding: 15px; 
+      border-radius: 12px; 
+      margin: 20px 0; 
     }
   </style>
 </head>
@@ -28,25 +27,23 @@
 
   <h1>⚽ Mój Piłkarski Livescore</h1>
 
-  <!-- CONFIG - tutaj wklejasz swój klucz -->
+  <!-- CONFIG -->
   <api-sports-widget
     data-type="config"
     data-key="f3c7ed02b7e08d0364bd2eb4f56ab2a5"
     data-sport="football"
-  
     data-lang="pl"
     data-theme="dark"
-    data-refresh="30"
+    data-refresh="15"
+    data-show-errors="true"
   ></api-sports-widget>
 
-  <!-- Mecze na dzisiaj -->
-  <div class="widget-box">
+  <div class="box">
     <h2>Dzisiaj</h2>
     <api-sports-widget data-type="games"></api-sports-widget>
   </div>
 
-  <!-- Tabela Ekstraklasy -->
-  <div class="widget-box">
+  <div class="box">
     <h2>Ekstraklasa - Tabela</h2>
     <api-sports-widget 
       data-type="standings" 
