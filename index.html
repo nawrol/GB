@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>⚽ Piłkarska Machina – Livescore & Statystyki</title>
+  <title>⚽ Piłkarska Machina – Top 30 lig</title>
 
-  <!-- Oficjalny loader widgetów API-FOOTBALL -->
   <script type="module" src="https://widgets.api-sports.io/football/1.1.8/widget.js"></script>
 
   <style>
@@ -25,11 +24,7 @@
       --accent-soft: #005a99;
       --border: #ddd;
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       background: var(--bg);
       color: var(--text);
@@ -37,8 +32,6 @@
       margin: 0;
       padding: 0;
     }
-
-    /* Górne menu */
     .top-menu {
       position: sticky;
       top: 0;
@@ -71,17 +64,13 @@
       font-weight: bold;
       white-space: nowrap;
     }
-    .top-menu a:hover {
-      color: var(--accent);
-    }
-
+    .top-menu a:hover { color: var(--accent); }
     .logo {
       font-size: 18px;
       font-weight: bold;
       color: var(--accent);
       white-space: nowrap;
     }
-
     .toggle-theme {
       cursor: pointer;
       border: 1px solid var(--border);
@@ -91,7 +80,6 @@
       border-radius: 20px;
       font-size: 13px;
     }
-
     header {
       background: #111;
       padding: 25px;
@@ -100,13 +88,11 @@
       font-weight: bold;
       border-bottom: 2px solid var(--border);
     }
-
     .container {
       max-width: 1200px;
       margin: auto;
       padding: 20px 15px 40px;
     }
-
     .section {
       background: var(--bg-alt);
       padding: 20px;
@@ -114,7 +100,6 @@
       border-radius: 12px;
       box-shadow: 0 0 12px #000;
     }
-
     h2 {
       margin-top: 0;
       margin-bottom: 15px;
@@ -122,27 +107,14 @@
       border-left: 5px solid var(--accent);
       padding-left: 10px;
     }
-
-    h3 {
-      margin-top: 0;
-      font-size: 18px;
-      margin-bottom: 10px;
-    }
-
-    a {
-      color: var(--accent);
-    }
-
-    a:hover {
-      color: var(--accent-soft);
-    }
-
+    h3 { margin-top: 0; font-size: 18px; margin-bottom: 10px; }
+    a { color: var(--accent); }
+    a:hover { color: var(--accent-soft); }
     .two-columns {
       display: grid;
       grid-template-columns: 1.2fr 0.8fr;
       gap: 20px;
     }
-
     .chips {
       display: flex;
       flex-wrap: wrap;
@@ -163,16 +135,12 @@
       color: #fff;
       border-color: var(--accent-soft);
     }
-
     .fav-star {
       cursor: pointer;
       font-size: 18px;
       margin-left: 8px;
     }
-    .fav-star.active {
-      color: gold;
-    }
-
+    .fav-star.active { color: gold; }
     .fav-list {
       display: flex;
       flex-wrap: wrap;
@@ -186,46 +154,40 @@
       font-size: 13px;
       background: #111;
     }
-
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
     @media (max-width: 900px) {
-      .two-columns {
-        grid-template-columns: 1fr;
-      }
-      .top-menu-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .top-menu ul {
-        justify-content: flex-start;
-      }
+      .two-columns { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .top-menu-inner { flex-direction: column; align-items: flex-start; }
+      .top-menu ul { justify-content: flex-start; }
     }
   </style>
 </head>
 <body>
 
-  <!-- GÓRNE MENU / NAVBAR -->
   <nav class="top-menu">
     <div class="top-menu-inner">
       <div class="logo">⚽ Machina</div>
       <ul>
         <li><a href="#live">Live</a></li>
         <li><a href="#today">Dzisiaj</a></li>
-        <li><a href="#global-live">Wszystkie mecze</a></li>
-        <li><a href="#top-leagues">Top Ligi</a></li>
+        <li><a href="#leagues-root">Top 30 lig</a></li>
         <li><a href="#team-profile">Drużyny</a></li>
         <li><a href="#match-page">Mecz PRO</a></li>
         <li><a href="#favorites">Ulubione</a></li>
-        <li><a href="#stats-global">Statystyki</a></li>
       </ul>
       <button class="toggle-theme" id="toggleTheme">🌙 / ☀️</button>
     </div>
   </nav>
 
-  <header>⚽ Piłkarska Machina – Livescore & Statystyki</header>
+  <header>⚽ Piłkarska Machina – Top 30 lig</header>
 
   <div class="container">
 
-    <!-- GLOBAL CONFIG API-FOOTBALL -->
     <div id="wg-api-football-config"
          data-host="v3.football.api-sports.io"
          data-key="f3c7ed02b7e08d0364bd2eb4f56ab2a5"
@@ -234,118 +196,29 @@
          data-lang="pl">
     </div>
 
-    <!-- LIVE -->
     <div class="section" id="live">
       <h2>🔴 Mecze na żywo</h2>
       <div id="wg-api-football-livescore" data-type="livescore"></div>
     </div>
 
-    <!-- MECZE DNIA -->
     <div class="section" id="today">
       <h2>📅 Mecze dzisiaj</h2>
       <div id="wg-api-football-games" data-type="games"></div>
     </div>
 
-    <!-- GLOBALNY LIVESCORE (wszystkie mecze) -->
-    <div class="section" id="global-live">
-      <h2>🌍 Globalny livescore</h2>
-      <p>Wszystkie mecze na świecie – możesz przewijać, filtrować w samym widżecie.</p>
-      <div id="wg-api-football-livescore-global" data-type="livescore"></div>
+    <div class="section" id="leagues-root">
+      <h2>🌍 Top 30 lig</h2>
+      <div id="leagues-container"></div>
     </div>
 
-    <!-- TOP 20 LIG -->
-    <div class="section" id="top-leagues">
-      <h2>🌍 Top 20 lig świata</h2>
-      <ul style="line-height: 1.8; font-size: 16px; columns: 2; max-width: 800px;">
-        <li><a href="#league-39">Premier League (ENG)</a></li>
-        <li><a href="#league-140">La Liga (ESP)</a></li>
-        <li><a href="#league-135">Serie A (ITA)</a></li>
-        <li><a href="#league-78">Bundesliga (GER)</a></li>
-        <li><a href="#league-61">Ligue 1 (FRA)</a></li>
-        <li><a href="#league-88">Eredivisie (NED)</a></li>
-        <li><a href="#league-94">Primeira Liga (POR)</a></li>
-        <li><a href="#league-62">Ekstraklasa (POL)</a></li>
-        <li><a href="#league-253">MLS (USA)</a></li>
-        <li><a href="#league-262">Liga MX (MEX)</a></li>
-        <li><a href="#league-71">Brasileirão (BRA)</a></li>
-        <li><a href="#league-128">Liga Profesional (ARG)</a></li>
-        <li><a href="#league-179">Scottish Premiership</a></li>
-        <li><a href="#league-144">Belgian Pro League</a></li>
-        <li><a href="#league-207">Swiss Super League</a></li>
-        <li><a href="#league-218">Austrian Bundesliga</a></li>
-        <li><a href="#league-203">Süper Lig (TUR)</a></li>
-        <li><a href="#league-197">Super League (GRE)</a></li>
-        <li><a href="#league-103">Superliga (DEN)</a></li>
-        <li><a href="#league-318">Fortuna Liga (CZE)</a></li>
-      </ul>
-    </div>
-
-    <!-- PRZYKŁAD: PEŁNY BLOK LIGI Z 1/2/3 POZIOMEM – PREMIER LEAGUE -->
-    <div class="section" id="league-39">
-      <h2>🏴 Premier League – 1. poziom</h2>
-      <div class="two-columns">
-        <div>
-          <h3>Tabela</h3>
-          <div data-type="standings" data-league="39" data-season="2024"></div>
-        </div>
-        <div>
-          <h3>Strzelcy</h3>
-          <div data-type="topscorers" data-league="39" data-season="2024"></div>
-        </div>
-      </div>
-      <h3>Terminarz / mecze</h3>
-      <div data-type="games" data-league="39" data-season="2024"></div>
-    </div>
-
-    <div class="section">
-      <h2>🏴 Championship – 2. poziom</h2>
-      <div data-type="standings" data-league="40" data-season="2024"></div>
-    </div>
-
-    <div class="section">
-      <h2>🏴 League One – 3. poziom</h2>
-      <div data-type="standings" data-league="41" data-season="2024"></div>
-    </div>
-
-    <!-- PRZYKŁAD: EKSTRAKLASA 1/2/3 POZIOM -->
-    <div class="section" id="league-62">
-      <h2>🇵🇱 Ekstraklasa – 1. poziom</h2>
-      <div class="two-columns">
-        <div>
-          <h3>Tabela</h3>
-          <div data-type="standings" data-league="62" data-season="2025"></div>
-        </div>
-        <div>
-          <h3>Strzelcy</h3>
-          <div data-type="topscorers" data-league="62" data-season="2025"></div>
-        </div>
-      </div>
-      <h3>Mecze</h3>
-      <div data-type="games" data-league="62" data-season="2025"></div>
-    </div>
-
-    <div class="section">
-      <h2>🇵🇱 I Liga – 2. poziom</h2>
-      <div data-type="standings" data-league="63" data-season="2025"></div>
-    </div>
-
-    <div class="section">
-      <h2>🇵🇱 II Liga – 3. poziom</h2>
-      <div data-type="standings" data-league="64" data-season="2025"></div>
-    </div>
-
-    <!-- PROFIL DRUŻYNY PRO -->
     <div class="section" id="team-profile">
       <h2>🔵 Profil drużyny PRO</h2>
-      <p>Przykład: Manchester City (team_id = 50). Możemy później podmienić na Twoje ulubione kluby.</p>
-
       <div class="chips" id="teamChips">
         <span class="chip active" data-team="50">Manchester City</span>
         <span class="chip" data-team="40">Liverpool</span>
         <span class="chip" data-team="33">Manchester United</span>
         <span class="chip" data-team="49">Chelsea</span>
       </div>
-
       <div class="two-columns">
         <div>
           <h3>Profil drużyny</h3>
@@ -358,40 +231,30 @@
       </div>
     </div>
 
-    <!-- STRONA MECZU PRO -->
     <div class="section" id="match-page">
       <h2>⚔️ Strona meczu PRO</h2>
-      <p>Przykład: konkretny mecz (fixture_id = 1035059). Możemy później zrobić wybór meczu z listy.</p>
-
       <div class="two-columns">
         <div>
           <h3>Statystyki meczu</h3>
           <div id="wg-api-football-statistics"
                data-type="statistics"
-               data-fixture="1035059">
-          </div>
-
+               data-fixture="1035059"></div>
           <h3>Składy</h3>
           <div id="wg-api-football-lineups"
                data-type="lineups"
-               data-fixture="1035059">
-          </div>
+               data-fixture="1035059"></div>
         </div>
         <div>
           <h3>Head‑to‑Head</h3>
           <div id="wg-api-football-h2h"
                data-type="h2h"
-               data-fixture="1035059">
-          </div>
+               data-fixture="1035059"></div>
         </div>
       </div>
     </div>
 
-    <!-- ULUBIONE DRUŻYNY (localStorage) -->
     <div class="section" id="favorites">
       <h2>⭐ Ulubione drużyny</h2>
-      <p>Kliknij gwiazdkę przy drużynie, żeby dodać ją do ulubionych.</p>
-
       <div>
         <span>Manchester City</span>
         <span class="fav-star" data-team="50">☆</span>
@@ -404,33 +267,18 @@
         <span>Legia Warszawa</span>
         <span class="fav-star" data-team="295">☆</span>
       </div>
-
       <h3>Twoje ulubione:</h3>
       <div class="fav-list" id="favList"></div>
-    </div>
-
-    <!-- STATYSTYKI GLOBALNE (szkielet pod rozbudowę) -->
-    <div class="section" id="stats-global">
-      <h2>📊 Statystyki globalne (szkielet)</h2>
-      <p>Tu możemy później dodać:</p>
-      <ul>
-        <li>Średnia goli na mecz w sezonie</li>
-        <li>Najczęstsze wyniki (1:0, 2:1 itd.)</li>
-        <li>Rozkład goli po minutach (0–15, 15–30…)</li>
-        <li>Najlepsze ataki / defensywy</li>
-      </ul>
-      <p>To będzie wymagało customowego JS + API, ale layout już jest.</p>
     </div>
 
   </div>
 
   <script>
-    // DARK / LIGHT MODE
+    const API_KEY = 'f3c7ed02b7e08d0364bd2eb4f56ab2a5';
+
     const toggleBtn = document.getElementById('toggleTheme');
     const savedTheme = localStorage.getItem('machina-theme');
-    if (savedTheme === 'light') {
-      document.body.classList.add('light');
-    }
+    if (savedTheme === 'light') document.body.classList.add('light');
     toggleBtn.addEventListener('click', () => {
       document.body.classList.toggle('light');
       localStorage.setItem(
@@ -439,11 +287,9 @@
       );
     });
 
-    // PRZEŁĄCZANIE DRUŻYN W PROFILU
     const teamChips = document.getElementById('teamChips');
     const teamWidget = document.getElementById('wg-api-football-team');
     const teamFixturesWidget = document.getElementById('wg-api-football-team-fixtures');
-
     if (teamChips) {
       teamChips.addEventListener('click', (e) => {
         const chip = e.target.closest('.chip');
@@ -456,7 +302,6 @@
       });
     }
 
-    // ULUBIONE DRUŻYNY (localStorage)
     const favStars = document.querySelectorAll('.fav-star');
     const favList = document.getElementById('favList');
 
@@ -480,11 +325,8 @@
     function toggleFavorite(team, name) {
       let favs = JSON.parse(localStorage.getItem('machina-favorites') || '[]');
       const idx = favs.findIndex(f => f.team === team);
-      if (idx >= 0) {
-        favs.splice(idx, 1);
-      } else {
-        favs.push({ team, name });
-      }
+      if (idx >= 0) favs.splice(idx, 1);
+      else favs.push({ team, name });
       localStorage.setItem('machina-favorites', JSON.stringify(favs));
       loadFavorites();
     }
@@ -498,6 +340,406 @@
     });
 
     loadFavorites();
+
+    // TOP 30 LIG
+    // Top 20 – 3 poziomy, ostatnie 10 – 2 poziomy
+    const LEAGUES = [
+      // 1–20: po 3 poziomy
+      { id: 39, season: 2024, code: 'ENG1', name: 'Premier League', flag: '🏴', levels: 3 },
+      { id: 40, season: 2024, code: 'ENG2', name: 'Championship', flag: '🏴', levels: 3 },
+      { id: 41, season: 2024, code: 'ENG3', name: 'League One', flag: '🏴', levels: 3 },
+
+      { id: 140, season: 2024, code: 'ESP1', name: 'La Liga', flag: '🇪🇸', levels: 3 },
+      { id: 141, season: 2024, code: 'ESP2', name: 'La Liga 2', flag: '🇪🇸', levels: 3 },
+      { id: 142, season: 2024, code: 'ESP3', name: 'Primera RFEF', flag: '🇪🇸', levels: 3 },
+
+      { id: 135, season: 2024, code: 'ITA1', name: 'Serie A', flag: '🇮🇹', levels: 3 },
+      { id: 136, season: 2024, code: 'ITA2', name: 'Serie B', flag: '🇮🇹', levels: 3 },
+      { id: 137, season: 2024, code: 'ITA3', name: 'Serie C', flag: '🇮🇹', levels: 3 },
+
+      { id: 78, season: 2024, code: 'GER1', name: 'Bundesliga', flag: '🇩🇪', levels: 3 },
+      { id: 79, season: 2024, code: 'GER2', name: '2. Bundesliga', flag: '🇩🇪', levels: 3 },
+      { id: 80, season: 2024, code: 'GER3', name: '3. Liga', flag: '🇩🇪', levels: 3 },
+
+      { id: 61, season: 2024, code: 'FRA1', name: 'Ligue 1', flag: '🇫🇷', levels: 3 },
+      { id: 62, season: 2024, code: 'FRA2', name: 'Ligue 2', flag: '🇫🇷', levels: 3 },
+      { id: 63, season: 2024, code: 'FRA3', name: 'National', flag: '🇫🇷', levels: 3 },
+
+      { id: 88, season: 2024, code: 'NED1', name: 'Eredivisie', flag: '🇳🇱', levels: 3 },
+      { id: 89, season: 2024, code: 'NED2', name: 'Eerste Divisie', flag: '🇳🇱', levels: 3 },
+      { id: 90, season: 2024, code: 'NED3', name: 'Tweede Divisie', flag: '🇳🇱', levels: 3 },
+
+      { id: 94, season: 2024, code: 'POR1', name: 'Primeira Liga', flag: '🇵🇹', levels: 3 },
+      { id: 95, season: 2024, code: 'POR2', name: 'Liga Portugal 2', flag: '🇵🇹', levels: 3 },
+      { id: 96, season: 2024, code: 'POR3', name: 'Liga 3', flag: '🇵🇹', levels: 3 },
+
+      { id: 62, season: 2025, code: 'POL1', name: 'Ekstraklasa', flag: '🇵🇱', levels: 3 },
+      { id: 63, season: 2025, code: 'POL2', name: 'I Liga', flag: '🇵🇱', levels: 3 },
+      { id: 64, season: 2025, code: 'POL3', name: 'II Liga', flag: '🇵🇱', levels: 3 },
+
+      { id: 253, season: 2024, code: 'USA1', name: 'MLS', flag: '🇺🇸', levels: 3 },
+      { id: 254, season: 2024, code: 'USA2', name: 'USL Championship', flag: '🇺🇸', levels: 3 },
+      { id: 255, season: 2024, code: 'USA3', name: 'USL League One', flag: '🇺🇸', levels: 3 },
+
+      { id: 262, season: 2024, code: 'MEX1', name: 'Liga MX', flag: '🇲🇽', levels: 3 },
+      { id: 263, season: 2024, code: 'MEX2', name: 'Liga de Expansión', flag: '🇲🇽', levels: 3 },
+      { id: 264, season: 2024, code: 'MEX3', name: 'Liga Premier', flag: '🇲🇽', levels: 3 },
+
+      { id: 71, season: 2024, code: 'BRA1', name: 'Serie A', flag: '🇧🇷', levels: 3 },
+      { id: 72, season: 2024, code: 'BRA2', name: 'Serie B', flag: '🇧🇷', levels: 3 },
+      { id: 73, season: 2024, code: 'BRA3', name: 'Serie C', flag: '🇧🇷', levels: 3 },
+
+      { id: 128, season: 2024, code: 'ARG1', name: 'Liga Profesional', flag: '🇦🇷', levels: 3 },
+      { id: 129, season: 2024, code: 'ARG2', name: 'Primera Nacional', flag: '🇦🇷', levels: 3 },
+      { id: 130, season: 2024, code: 'ARG3', name: 'Torneo Federal A', flag: '🇦🇷', levels: 3 },
+
+      { id: 179, season: 2024, code: 'SCO1', name: 'Premiership', flag: '🏴', levels: 3 },
+      { id: 180, season: 2024, code: 'SCO2', name: 'Championship', flag: '🏴', levels: 3 },
+      { id: 181, season: 2024, code: 'SCO3', name: 'League One', flag: '🏴', levels: 3 },
+
+      { id: 144, season: 2024, code: 'BEL1', name: 'Pro League', flag: '🇧🇪', levels: 3 },
+      { id: 145, season: 2024, code: 'BEL2', name: 'Challenger Pro League', flag: '🇧🇪', levels: 3 },
+      { id: 146, season: 2024, code: 'BEL3', name: 'National Division 1', flag: '🇧🇪', levels: 3 },
+
+      { id: 207, season: 2024, code: 'SUI1', name: 'Super League', flag: '🇨🇭', levels: 3 },
+      { id: 208, season: 2024, code: 'SUI2', name: 'Challenge League', flag: '🇨🇭', levels: 3 },
+      { id: 209, season: 2024, code: 'SUI3', name: 'Promotion League', flag: '🇨🇭', levels: 3 },
+
+      { id: 218, season: 2024, code: 'AUT1', name: 'Bundesliga', flag: '🇦🇹', levels: 3 },
+      { id: 219, season: 2024, code: 'AUT2', name: '2. Liga', flag: '🇦🇹', levels: 3 },
+      { id: 220, season: 2024, code: 'AUT3', name: 'Regionalliga', flag: '🇦🇹', levels: 3 },
+
+      { id: 203, season: 2024, code: 'TUR1', name: 'Süper Lig', flag: '🇹🇷', levels: 3 },
+      { id: 204, season: 2024, code: 'TUR2', name: 'TFF 1. Lig', flag: '🇹🇷', levels: 3 },
+      { id: 205, season: 2024, code: 'TUR3', name: 'TFF 2. Lig', flag: '🇹🇷', levels: 3 },
+
+      { id: 197, season: 2024, code: 'GRE1', name: 'Super League', flag: '🇬🇷', levels: 3 },
+      { id: 198, season: 2024, code: 'GRE2', name: 'Super League 2', flag: '🇬🇷', levels: 3 },
+      { id: 199, season: 2024, code: 'GRE3', name: 'Gamma Ethniki', flag: '🇬🇷', levels: 3 },
+
+      { id: 103, season: 2024, code: 'DEN1', name: 'Superliga', flag: '🇩🇰', levels: 3 },
+      { id: 104, season: 2024, code: 'DEN2', name: '1st Division', flag: '🇩🇰', levels: 3 },
+      { id: 105, season: 2024, code: 'DEN3', name: '2nd Division', flag: '🇩🇰', levels: 3 },
+
+      { id: 318, season: 2024, code: 'CZE1', name: 'Fortuna Liga', flag: '🇨🇿', levels: 3 },
+      { id: 319, season: 2024, code: 'CZE2', name: 'FNL', flag: '🇨🇿', levels: 3 },
+      { id: 320, season: 2024, code: 'CZE3', name: 'MSFL', flag: '🇨🇿', levels: 3 },
+
+      // 21–30: po 2 poziomy
+      { id: 113, season: 2024, code: 'SWE1', name: 'Allsvenskan', flag: '🇸🇪', levels: 2 },
+      { id: 114, season: 2024, code: 'SWE2', name: 'Superettan', flag: '🇸🇪', levels: 2 },
+
+      { id: 1031, season: 2024, code: 'NOR1', name: 'Eliteserien', flag: '🇳🇴', levels: 2 },
+      { id: 1032, season: 2024, code: 'NOR2', name: 'OBOS-ligaen', flag: '🇳🇴', levels: 2 },
+
+      { id: 1061, season: 2024, code: 'CRO1', name: 'HNL', flag: '🇭🇷', levels: 2 },
+      { id: 1062, season: 2024, code: 'CRO2', name: '2. HNL', flag: '🇭🇷', levels: 2 },
+
+      { id: 1071, season: 2024, code: 'SRB1', name: 'SuperLiga', flag: '🇷🇸', levels: 2 },
+      { id: 1072, season: 2024, code: 'SRB2', name: 'Prva Liga', flag: '🇷🇸', levels: 2 },
+
+      { id: 1081, season: 2024, code: 'ROU1', name: 'Liga I', flag: '🇷🇴', levels: 2 },
+      { id: 1082, season: 2024, code: 'ROU2', name: 'Liga II', flag: '🇷🇴', levels: 2 },
+
+      { id: 1091, season: 2024, code: 'UKR1', name: 'Premier League', flag: '🇺🇦', levels: 2 },
+      { id: 1092, season: 2024, code: 'UKR2', name: 'Persha Liha', flag: '🇺🇦', levels: 2 },
+
+      { id: 1101, season: 2024, code: 'RUS1', name: 'Premier Liga', flag: '🇷🇺', levels: 2 },
+      { id: 1102, season: 2024, code: 'RUS2', name: 'FNL', flag: '🇷🇺', levels: 2 },
+
+      { id: 1111, season: 2024, code: 'JPN1', name: 'J1 League', flag: '🇯🇵', levels: 2 },
+      { id: 1112, season: 2024, code: 'JPN2', name: 'J2 League', flag: '🇯🇵', levels: 2 },
+
+      { id: 1121, season: 2024, code: 'KOR1', name: 'K League 1', flag: '🇰🇷', levels: 2 },
+      { id: 1122, season: 2024, code: 'KOR2', name: 'K League 2', flag: '🇰🇷', levels: 2 },
+
+      { id: 1131, season: 2024, code: 'CHN1', name: 'Super League', flag: '🇨🇳', levels: 2 },
+      { id: 1132, season: 2024, code: 'CHN2', name: 'League One', flag: '🇨🇳', levels: 2 },
+    ];
+
+    function renderLeagues() {
+      const root = document.getElementById('leagues-container');
+      root.innerHTML = '';
+
+      LEAGUES.forEach(l => {
+        const leagueSection = document.createElement('div');
+        leagueSection.className = 'section';
+        leagueSection.id = `league-${l.code}`;
+        leagueSection.innerHTML = `
+          <h2>${l.flag} ${l.name}</h2>
+          <div class="two-columns">
+            <div>
+              <h3>Tabela</h3>
+              <div data-type="standings" data-league="${l.id}" data-season="${l.season}"></div>
+            </div>
+            <div>
+              <h3>Strzelcy</h3>
+              <div data-type="topscorers" data-league="${l.id}" data-season="${l.season}"></div>
+            </div>
+          </div>
+          <h3>Mecze</h3>
+          <div data-type="games" data-league="${l.id}" data-season="${l.season}"></div>
+        `;
+
+        const statsSection = document.createElement('div');
+        statsSection.className = 'section';
+        statsSection.id = `stats-${l.code}`;
+        statsSection.innerHTML = `
+          <h2>📊 Statystyki ligowe – ${l.name}</h2>
+          <div class="stats-grid">
+            <div>
+              <ul>
+                <li>Średnia goli: <strong class="avgGoals">–</strong></li>
+                <li>BTTS: <strong class="bttsPct">–</strong></li>
+                <li>Over 2.5: <strong class="over25Pct">–</strong></li>
+                <li>Mecze: <strong class="matchesCount">–</strong></li>
+              </ul>
+            </div>
+            <div>
+              <h3>Najczęstsze wyniki</h3>
+              <ul class="scoreDist"></ul>
+            </div>
+          </div>
+        `;
+
+        const advSection = document.createElement('div');
+        advSection.className = 'section';
+        advSection.id = `adv-${l.code}`;
+        advSection.innerHTML = `
+          <h2>📊 Zaawansowane statystyki – ${l.name}</h2>
+          <div class="stats-grid">
+            <div>
+              <h3>Gole i BTTS (połówki)</h3>
+              <ul>
+                <li>Over 0.5 gola w 1. połowie: <strong class="over05_ht">–</strong></li>
+                <li>Over 1.5 gola w 1. połowie: <strong class="over15_ht">–</strong></li>
+                <li>Over 0.5 gola w 2. połowie: <strong class="over05_ft2">–</strong></li>
+                <li>Over 1.5 gola w 2. połowie: <strong class="over15_ft2">–</strong></li>
+                <li>BTTS (obie strzelą): <strong class="btts">–</strong></li>
+                <li>BTTS w 1. połowie: <strong class="btts_ht">–</strong></li>
+                <li>BTTS w 2. połowie: <strong class="btts_ft2">–</strong></li>
+              </ul>
+            </div>
+            <div>
+              <h3>Rożne, kartki, sędziowie</h3>
+              <ul>
+                <li>Średnia rożnych na mecz: <strong class="avg_corners">–</strong></li>
+                <li>Średnia żółtych kartek: <strong class="avg_yellow">–</strong></li>
+                <li>Średnia czerwonych kartek: <strong class="avg_red">–</strong></li>
+              </ul>
+              <h4>Sędziowie (TOP 5 po kartkach)</h4>
+              <ul class="referees"></ul>
+            </div>
+          </div>
+        `;
+
+        root.appendChild(leagueSection);
+        root.appendChild(statsSection);
+        root.appendChild(advSection);
+      });
+    }
+
+    async function loadLeagueStats(leagueId, season, containerId) {
+      const url = `https://v3.football.api-sports.io/fixtures?league=${leagueId}&season=${season}&status=FT`;
+
+      const res = await fetch(url, {
+        headers: { 'x-apisports-key': API_KEY }
+      });
+      const data = await res.json();
+      const fixtures = data.response || [];
+
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      const avgGoalsEl = container.querySelector('.avgGoals');
+      const bttsPctEl = container.querySelector('.bttsPct');
+      const over25PctEl = container.querySelector('.over25Pct');
+      const matchesCountEl = container.querySelector('.matchesCount');
+      const scoreDistEl = container.querySelector('.scoreDist');
+
+      let totalGoals = 0;
+      let matches = 0;
+      let btts = 0;
+      let over25 = 0;
+      const scoreMap = {};
+
+      fixtures.forEach(fix => {
+        const gh = fix.goals?.home ?? 0;
+        const ga = fix.goals?.away ?? 0;
+        const total = gh + ga;
+
+        totalGoals += total;
+        matches++;
+
+        if (gh > 0 && ga > 0) btts++;
+        if (total > 2.5) over25++;
+
+        const scoreKey = `${gh}:${ga}`;
+        scoreMap[scoreKey] = (scoreMap[scoreKey] || 0) + 1;
+      });
+
+      if (!matches) {
+        avgGoalsEl.textContent = '–';
+        bttsPctEl.textContent = '–';
+        over25PctEl.textContent = '–';
+        matchesCountEl.textContent = '0';
+        scoreDistEl.innerHTML = '<li>Brak danych</li>';
+        return;
+      }
+
+      const avgGoals = (totalGoals / matches).toFixed(2);
+      const bttsPct = ((btts / matches) * 100).toFixed(1) + '%';
+      const over25Pct = ((over25 / matches) * 100).toFixed(1) + '%';
+
+      avgGoalsEl.textContent = avgGoals;
+      bttsPctEl.textContent = bttsPct;
+      over25PctEl.textContent = over25Pct;
+      matchesCountEl.textContent = matches;
+
+      scoreDistEl.innerHTML = '';
+      Object.entries(scoreMap)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10)
+        .forEach(([score, count]) => {
+          const li = document.createElement('li');
+          li.textContent = `${score} – ${count} meczów`;
+          scoreDistEl.appendChild(li);
+        });
+    }
+
+    async function loadAdvancedLeagueStats(leagueId, season, containerId) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      const over05_htEl = container.querySelector('.over05_ht');
+      const over15_htEl = container.querySelector('.over15_ht');
+      const over05_ft2El = container.querySelector('.over05_ft2');
+      const over15_ft2El = container.querySelector('.over15_ft2');
+      const bttsEl = container.querySelector('.btts');
+      const bttsHtEl = container.querySelector('.btts_ht');
+      const bttsFt2El = container.querySelector('.btts_ft2');
+      const avgCornersEl = container.querySelector('.avg_corners');
+      const avgYellowEl = container.querySelector('.avg_yellow');
+      const avgRedEl = container.querySelector('.avg_red');
+      const refsEl = container.querySelector('.referees');
+
+      const fixturesUrl = `https://v3.football.api-sports.io/fixtures?league=${leagueId}&season=${season}&status=FT`;
+      const res = await fetch(fixturesUrl, {
+        headers: { 'x-apisports-key': API_KEY }
+      });
+      const data = await res.json();
+      const fixtures = data.response || [];
+
+      let matches = 0;
+      let over05_ht = 0, over15_ht = 0, over05_ft2 = 0, over15_ft2 = 0;
+      let btts = 0, btts_ht = 0, btts_ft2 = 0;
+      let totalCorners = 0, totalYellow = 0, totalRed = 0;
+
+      const refereeMap = {};
+
+      for (const fix of fixtures) {
+        const fixtureId = fix.fixture.id;
+        const goals = fix.goals || {};
+        const score = fix.score || {};
+        const refereeName = fix.fixture.referee || 'Nieznany';
+
+        matches++;
+
+        const htHome = score.halftime?.home ?? 0;
+        const htAway = score.halftime?.away ?? 0;
+        const ftHome = goals.home ?? 0;
+        const ftAway = goals.away ?? 0;
+
+        const htTotal = htHome + htAway;
+        const ftTotal = ftHome + ftAway;
+        const secondHalfTotal = ftTotal - htTotal;
+
+        if (htTotal > 0.5) over05_ht++;
+        if (htTotal > 1.5) over15_ht++;
+        if (secondHalfTotal > 0.5) over05_ft2++;
+        if (secondHalfTotal > 1.5) over15_ft2++;
+
+        if (ftHome > 0 && ftAway > 0) btts++;
+        if (htHome > 0 && htAway > 0) btts_ht++;
+        if (secondHalfTotal > 0 && (ftHome - htHome) > 0 && (ftAway - htAway) > 0) btts_ft2++;
+
+        const statsUrl = `https://v3.football.api-sports.io/fixtures/statistics?fixture=${fixtureId}`;
+        const statsRes = await fetch(statsUrl, {
+          headers: { 'x-apisports-key': API_KEY }
+        });
+        const statsData = await statsRes.json();
+        const stats = statsData.response || [];
+
+        let matchCorners = 0;
+        let matchYellow = 0;
+        let matchRed = 0;
+
+        stats.forEach(teamStats => {
+          teamStats.statistics.forEach(s => {
+            const type = s.type;
+            const val = s.value ?? 0;
+            if (type === 'Corner Kicks') matchCorners += val;
+            if (type === 'Yellow Cards') matchYellow += val;
+            if (type === 'Red Cards') matchRed += val;
+          });
+        });
+
+        totalCorners += matchCorners;
+        totalYellow += matchYellow;
+        totalRed += matchRed;
+
+        if (!refereeMap[refereeName]) {
+          refereeMap[refereeName] = { matches: 0, yellow: 0, red: 0 };
+        }
+        refereeMap[refereeName].matches++;
+        refereeMap[refereeName].yellow += matchYellow;
+        refereeMap[refereeName].red += matchRed;
+      }
+
+      const pct = (val) => matches ? ((val / matches) * 100).toFixed(1) + '%' : '–';
+
+      over05_htEl.textContent = pct(over05_ht);
+      over15_htEl.textContent = pct(over15_ht);
+      over05_ft2El.textContent = pct(over05_ft2);
+      over15_ft2El.textContent = pct(over15_ft2);
+      bttsEl.textContent = pct(btts);
+      bttsHtEl.textContent = pct(btts_ht);
+      bttsFt2El.textContent = pct(btts_ft2);
+
+      avgCornersEl.textContent = matches ? (totalCorners / matches).toFixed(2) : '–';
+      avgYellowEl.textContent = matches ? (totalYellow / matches).toFixed(2) : '–';
+      avgRedEl.textContent = matches ? (totalRed / matches).toFixed(2) : '–';
+
+      refsEl.innerHTML = '';
+      Object.entries(refereeMap)
+        .filter(([name]) => name && name !== 'Nieznany')
+        .map(([name, r]) => ({
+          name,
+          matches: r.matches,
+          avgYellow: r.yellow / r.matches,
+          avgRed: r.red / r.matches
+        }))
+        .sort((a, b) => (b.avgYellow + b.avgRed) - (a.avgYellow + a.avgRed))
+        .slice(0, 5)
+        .forEach(ref => {
+          const li = document.createElement('li');
+          li.textContent = `${ref.name} – mecze: ${ref.matches}, żółte: ${ref.avgYellow.toFixed(2)}, czerwone: ${ref.avgRed.toFixed(2)}`;
+          refsEl.appendChild(li);
+        });
+    }
+
+    renderLeagues();
+
+    LEAGUES.forEach(l => {
+      const statsId = `stats-${l.code}`;
+      const advId = `adv-${l.code}`;
+      if (document.getElementById(statsId)) {
+        loadLeagueStats(l.id, l.season, statsId);
+      }
+      if (document.getElementById(advId)) {
+        loadAdvancedLeagueStats(l.id, l.season, advId);
+      }
+    });
   </script>
 
 </body>
