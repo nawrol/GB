@@ -3,54 +3,148 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mój Livescore</title>
-  <script src="https://widgets.api-sports.io/football.js"></script>
+  <title>⚽ Profesjonalny Livescore</title>
+
+  <!-- Oficjalny loader widgetów -->
+  <script type="module" src="https://widgets.api-sports.io/football/1.1.8/widget.js"></script>
 
   <style>
-    body { 
-      background: #0f0f0f; 
-      color: #eee; 
-      font-family: Arial, sans-serif; 
-      padding: 20px; 
-      margin: 0; 
+    body {
+      background: #0d0d0d;
+      color: #eaeaea;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
     }
-    h1 { text-align: center; margin: 30px 0; }
-    .box { 
-      background: #1a1a1a; 
-      padding: 15px; 
-      border-radius: 12px; 
-      margin: 20px 0; 
+    header {
+      background: #111;
+      padding: 25px;
+      text-align: center;
+      font-size: 32px;
+      font-weight: bold;
+      border-bottom: 2px solid #222;
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+    .section {
+      background: #161616;
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 12px;
+      box-shadow: 0 0 12px #000;
+    }
+    h2 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      font-size: 24px;
+      border-left: 5px solid #00aaff;
+      padding-left: 10px;
     }
   </style>
 </head>
 <body>
 
-  <h1>⚽ Mój Piłkarski Livescore</h1>
+<header>⚽ Profesjonalny Livescore</header>
 
-  <!-- CONFIG -->
-  <api-sports-widget
-    data-type="config"
-    data-key="f3c7ed02b7e08d0364bd2eb4f56ab2a5"
-    data-sport="football"
-    data-lang="pl"
-    data-theme="dark"
-    data-refresh="15"
-    data-show-errors="true"
-  ></api-sports-widget>
+<div class="container">
 
-  <div class="box">
-    <h2>Dzisiaj</h2>
-    <api-sports-widget data-type="games"></api-sports-widget>
+  <!-- GLOBAL CONFIG -->
+  <div id="wg-api-football-config"
+       data-host="v3.football.api-sports.io"
+       data-key="f3c7ed02b7e08d0364bd2eb4f56ab2a5"
+       data-theme="dark"
+       data-refresh="60"
+       data-lang="pl">
   </div>
 
-  <div class="box">
-    <h2>Ekstraklasa - Tabela</h2>
-    <api-sports-widget 
-      data-type="standings" 
-      data-league="62" 
-      data-season="2025">
-    </api-sports-widget>
+  <!-- LIVE -->
+  <div class="section">
+    <h2>🔴 Mecze na żywo</h2>
+    <div id="wg-api-football-livescore" data-type="livescore"></div>
   </div>
+
+  <!-- MECZE DNIA -->
+  <div class="section">
+    <h2>📅 Mecze dzisiaj</h2>
+    <div id="wg-api-football-games" data-type="games"></div>
+  </div>
+
+  <!-- NADCHODZĄCE MECZE -->
+  <div class="section">
+    <h2>⏳ Nadchodzące mecze</h2>
+    <div id="wg-api-football-fixtures" data-type="fixtures"></div>
+  </div>
+
+  <!-- TABELA EKSTRAKLASY -->
+  <div class="section">
+    <h2>🇵🇱 Ekstraklasa – Tabela</h2>
+    <div id="wg-api-football-standings-ekstraklasa"
+         data-type="standings"
+         data-league="62"
+         data-season="2025">
+    </div>
+  </div>
+
+  <!-- TABELA PREMIER LEAGUE -->
+  <div class="section">
+    <h2>🏴 Premier League – Tabela</h2>
+    <div id="wg-api-football-standings-pl"
+         data-type="standings"
+         data-league="39"
+         data-season="2024">
+    </div>
+  </div>
+
+  <!-- STRZELCY LIGI -->
+  <div class="section">
+    <h2>🎯 Strzelcy – Premier League</h2>
+    <div id="wg-api-football-topscorers"
+         data-type="topscorers"
+         data-league="39"
+         data-season="2024">
+    </div>
+  </div>
+
+  <!-- H2H -->
+  <div class="section">
+    <h2>⚔️ Head‑to‑Head</h2>
+    <div id="wg-api-football-h2h"
+         data-type="h2h"
+         data-fixture="1035059">
+    </div>
+  </div>
+
+  <!-- STATYSTYKI MECZU -->
+  <div class="section">
+    <h2>📊 Statystyki meczu</h2>
+    <div id="wg-api-football-statistics"
+         data-type="statistics"
+         data-fixture="1035059">
+    </div>
+  </div>
+
+  <!-- SKŁADY MECZU -->
+  <div class="section">
+    <h2>🧩 Składy</h2>
+    <div id="wg-api-football-lineups"
+         data-type="lineups"
+         data-fixture="1035059">
+    </div>
+  </div>
+
+  <!-- WIDGET DRUŻYNY -->
+  <div class="section">
+    <h2>🔵 Manchester City – Profil drużyny</h2>
+    <div id="wg-api-football-team"
+         data-type="team"
+         data-team="50">
+    </div>
+  </div>
+
+</div>
 
 </body>
 </html>
