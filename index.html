@@ -30,6 +30,9 @@
             border-bottom: 1px solid var(--border-color);
             padding: 20px;
             text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         header h1 {
@@ -45,7 +48,8 @@
             margin: 20px auto;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            /* Lewa kolumna szersza (mecze), prawa węższa (tabela) */
+            grid-template-columns: 2fr 1fr; 
             gap: 30px;
         }
 
@@ -55,11 +59,7 @@
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            overflow: hidden;
-        }
-
-        .widget-section.full-width {
-            grid-column: 1 / -1;
+            height: fit-content;
         }
 
         .widget-section h2 {
@@ -68,12 +68,17 @@
             margin-top: 0;
             color: #fff;
             font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
-        
-        @media (max-width: 768px) {
+
+        .helper-text {
+            font-size: 0.85rem;
+            color: #8b949e;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        /* Responsywność dla ekranów mobilnych */
+        @media (max-width: 1024px) {
             .container {
                 grid-template-columns: 1fr;
             }
@@ -86,10 +91,11 @@
         <h1>GB SCORE</h1>
     </header>
 
-    <!-- GŁÓWNY WIDŻET KONFIGURACYJNY (Wymagany) -->
+    <!-- 1. GŁÓWNA KONFIGURACJA ULTRA -->
+    <!-- Ładuje się raz, działa w tle dla wszystkich innych widgetów i okienek -->
     <api-sports-widget 
         data-type="config" 
-        data-key="f3c7ed02b7e08d0364bd2eb4f56ab2a5" 
+        data-key="WPROWADZ_SWOJ_KLUCZ_API_ULTRA" 
         data-sport="football" 
         data-lang="pl"
         data-theme="dark"
@@ -100,9 +106,12 @@
 
     <div class="container">
 
-        <!-- 1. MECZE (GAMES) - Wyniki na żywo i nadchodzące spotkania -->
-        <div class="widget-section full-width">
+        <!-- 2. CENTRUM MECZOWE (Hub dla H2H, Kursów, Rzutów rożnych i Heatmap) -->
+        <div class="widget-section">
             <h2>📅 Centrum Meczowe (Live & Terminarz)</h2>
+            <p class="helper-text">
+                Kliknij w dowolny mecz, aby otworzyć zaawansowane szczegóły spotkania (Składy, Heatmapy, Kursy LIVE, H2H oraz Przewidywania).
+            </p>
             <api-sports-widget 
                 data-type="games" 
                 data-date="today"
@@ -111,123 +120,18 @@
             </api-sports-widget>
         </div>
 
-        <!-- 2. TABELA LIGOWA (STANDINGS) -->
+        <!-- 3. TABELA LIGOWA (Hub dla profili drużyn, graczy i kontuzji) -->
         <div class="widget-section">
-            <h2>🏆 Tabela Ligowa (np. Premier League)</h2>
+            <h2>🏆 Tabela Ligowa</h2>
+            <p class="helper-text">
+                Kliknij w wybraną drużynę, aby sprawdzić jej pełną kadrę, listę kontuzjowanych oraz szczegółowe statystyki zawodników.
+            </p>
+            <!-- Domyślnie ładuje Premier League (ID 39), można zmienić ID na dowolną inną -->
             <api-sports-widget 
                 data-type="standings" 
                 data-league="39" 
                 data-season="2025"
                 data-target-team="modal">
-            </api-sports-widget>
-        </div>
-
-        <!-- 3. LISTA LIG (LEAGUES) -->
-        <div class="widget-section">
-            <h2>🌍 Dostępne Ligi i Rozgrywki</h2>
-            <api-sports-widget 
-                data-type="leagues"
-                data-target-league="modal">
-            </api-sports-widget>
-        </div>
-
-        <!-- 4. SZCZEGÓŁY KONKRETNEGO MECZU (GAME) -->
-        <div class="widget-section">
-            <h2>⚽ Szczegóły Spotkania (Statystyki na żywo)</h2>
-            <!-- data-game wymaga ID konkretnego spotkania -->
-            <api-sports-widget 
-                data-type="game" 
-                data-game="1035043"
-                data-target-player="modal"
-                data-target-team="modal">
-            </api-sports-widget>
-        </div>
-
-        <!-- 5. HISTORIA SPOTKAŃ (H2H) -->
-        <div class="widget-section">
-            <h2>⚔️ Head to Head (Historia Pojedynków)</h2>
-            <!-- Format: ID_DRUZYNY_1-ID_DRUZYNY_2 -->
-            <api-sports-widget 
-                data-type="h2h" 
-                data-h2h="33-34">
-            </api-sports-widget>
-        </div>
-
-        <!-- 6. PRZEWIDYWANIA (PREDICTIONS) -->
-        <div class="widget-section">
-            <h2>📊 Algorytmiczne Przewidywania (Predictions)</h2>
-            <!-- Wymaga ID konkretnego meczu -->
-            <api-sports-widget 
-                data-type="predictions" 
-                data-game="1035043">
-            </api-sports-widget>
-        </div>
-
-        <!-- 7. KURSY BUKMACHERSKIE (ODDS) -->
-        <div class="widget-section">
-            <h2>📈 Kursy Bukmacherskie (Pre-match & Live)</h2>
-            <api-sports-widget 
-                data-type="odds" 
-                data-game="1035043">
-            </api-sports-widget>
-        </div>
-
-        <!-- 8. PROFIL DRUŻYNY (TEAM) -->
-        <div class="widget-section full-width">
-            <h2>🛡️ Profil Drużyny, Kadra i Statystyki</h2>
-            <api-sports-widget 
-                data-type="team" 
-                data-team-id="33" 
-                data-season="2025"
-                data-team-squad="true"
-                data-team-statistics="true"
-                data-team-injuries="true"
-                data-target-player="modal">
-            </api-sports-widget>
-        </div>
-
-        <!-- 9. PROFIL ZAWODNIKA (PLAYER) -->
-        <div class="widget-section">
-            <h2>👤 Profil Zawodnika</h2>
-            <api-sports-widget 
-                data-type="player" 
-                data-player-id="276" 
-                data-season="2025"
-                data-player-statistics="true"
-                data-player-injuries="true">
-            </api-sports-widget>
-        </div>
-
-        <!-- 10. NAJLEPSI STRZELCY (TOP SCORERS) -->
-        <div class="widget-section">
-            <h2>🎯 Najlepsi Strzelcy (Top Scorers)</h2>
-            <api-sports-widget 
-                data-type="top-scorers" 
-                data-league="39" 
-                data-season="2025"
-                data-target-player="modal">
-            </api-sports-widget>
-        </div>
-
-        <!-- 11. NAJLEPSI ASYSTENCI (TOP ASSISTS) -->
-        <div class="widget-section">
-            <h2>👟 Najlepsi Asystenci (Top Assists)</h2>
-            <api-sports-widget 
-                data-type="top-assists" 
-                data-league="39" 
-                data-season="2025"
-                data-target-player="modal">
-            </api-sports-widget>
-        </div>
-
-        <!-- 12. KARTKI (TOP YELLOW / RED CARDS) -->
-        <div class="widget-section">
-            <h2>🟨 Najczęściej Karani (Żółte Kartki)</h2>
-            <api-sports-widget 
-                data-type="top-yellow-cards" 
-                data-league="39" 
-                data-season="2025"
-                data-target-player="modal">
             </api-sports-widget>
         </div>
 
