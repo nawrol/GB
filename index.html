@@ -1,150 +1,504 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>⚽ Profesjonalny Livescore</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚽ Piłkarska Machina – Livescore & Statystyki</title>
 
-  <!-- Oficjalny loader widgetów -->
+  <!-- Oficjalny loader widgetów API-FOOTBALL -->
   <script type="module" src="https://widgets.api-sports.io/football/1.1.8/widget.js"></script>
 
   <style>
+    :root {
+      --bg: #0d0d0d;
+      --bg-alt: #161616;
+      --text: #eaeaea;
+      --accent: #00aaff;
+      --accent-soft: #0077cc;
+      --border: #222;
+    }
+    body.light {
+      --bg: #f5f5f5;
+      --bg-alt: #ffffff;
+      --text: #111;
+      --accent: #0077cc;
+      --accent-soft: #005a99;
+      --border: #ddd;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      background: #0d0d0d;
-      color: #eaeaea;
+      background: var(--bg);
+      color: var(--text);
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
     }
+
+    /* Górne menu */
+    .top-menu {
+      position: sticky;
+      top: 0;
+      background: #111;
+      padding: 10px 0;
+      z-index: 999;
+      border-bottom: 2px solid var(--border);
+    }
+    .top-menu-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 15px;
+    }
+    .top-menu ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin: 0;
+      padding: 0;
+    }
+    .top-menu a {
+      color: #eee;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+    .top-menu a:hover {
+      color: var(--accent);
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .toggle-theme {
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: #000;
+      color: #eee;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 13px;
+    }
+
     header {
       background: #111;
       padding: 25px;
       text-align: center;
       font-size: 32px;
       font-weight: bold;
-      border-bottom: 2px solid #222;
+      border-bottom: 2px solid var(--border);
     }
+
     .container {
       max-width: 1200px;
       margin: auto;
-      padding: 20px;
+      padding: 20px 15px 40px;
     }
+
     .section {
-      background: #161616;
+      background: var(--bg-alt);
       padding: 20px;
       margin: 25px 0;
       border-radius: 12px;
       box-shadow: 0 0 12px #000;
     }
+
     h2 {
       margin-top: 0;
       margin-bottom: 15px;
-      font-size: 24px;
-      border-left: 5px solid #00aaff;
+      font-size: 22px;
+      border-left: 5px solid var(--accent);
       padding-left: 10px;
+    }
+
+    h3 {
+      margin-top: 0;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    a:hover {
+      color: var(--accent-soft);
+    }
+
+    .two-columns {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .chip {
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      font-size: 13px;
+      background: #111;
+      color: #eee;
+    }
+    .chip.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent-soft);
+    }
+
+    .fav-star {
+      cursor: pointer;
+      font-size: 18px;
+      margin-left: 8px;
+    }
+    .fav-star.active {
+      color: gold;
+    }
+
+    .fav-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .fav-item {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 13px;
+      background: #111;
+    }
+
+    @media (max-width: 900px) {
+      .two-columns {
+        grid-template-columns: 1fr;
+      }
+      .top-menu-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .top-menu ul {
+        justify-content: flex-start;
+      }
     }
   </style>
 </head>
 <body>
 
-<header>⚽ Profesjonalny Livescore</header>
-
-<div class="container">
-
-  <!-- GLOBAL CONFIG -->
-  <div id="wg-api-football-config"
-       data-host="v3.football.api-sports.io"
-       data-key="f3c7ed02b7e08d0364bd2eb4f56ab2a5"
-       data-theme="dark"
-       data-refresh="60"
-       data-lang="pl">
-  </div>
-
-  <!-- LIVE -->
-  <div class="section">
-    <h2>🔴 Mecze na żywo</h2>
-    <div id="wg-api-football-livescore" data-type="livescore"></div>
-  </div>
-
-  <!-- MECZE DNIA -->
-  <div class="section">
-    <h2>📅 Mecze dzisiaj</h2>
-    <div id="wg-api-football-games" data-type="games"></div>
-  </div>
-
-  <!-- NADCHODZĄCE MECZE -->
-  <div class="section">
-    <h2>⏳ Nadchodzące mecze</h2>
-    <div id="wg-api-football-fixtures" data-type="fixtures"></div>
-  </div>
-
-  <!-- TABELA EKSTRAKLASY -->
-  <div class="section">
-    <h2>🇵🇱 Ekstraklasa – Tabela</h2>
-    <div id="wg-api-football-standings-ekstraklasa"
-         data-type="standings"
-         data-league="62"
-         data-season="2025">
+  <!-- GÓRNE MENU / NAVBAR -->
+  <nav class="top-menu">
+    <div class="top-menu-inner">
+      <div class="logo">⚽ Machina</div>
+      <ul>
+        <li><a href="#live">Live</a></li>
+        <li><a href="#today">Dzisiaj</a></li>
+        <li><a href="#global-live">Wszystkie mecze</a></li>
+        <li><a href="#top-leagues">Top Ligi</a></li>
+        <li><a href="#team-profile">Drużyny</a></li>
+        <li><a href="#match-page">Mecz PRO</a></li>
+        <li><a href="#favorites">Ulubione</a></li>
+        <li><a href="#stats-global">Statystyki</a></li>
+      </ul>
+      <button class="toggle-theme" id="toggleTheme">🌙 / ☀️</button>
     </div>
-  </div>
+  </nav>
 
-  <!-- TABELA PREMIER LEAGUE -->
-  <div class="section">
-    <h2>🏴 Premier League – Tabela</h2>
-    <div id="wg-api-football-standings-pl"
-         data-type="standings"
-         data-league="39"
-         data-season="2024">
+  <header>⚽ Piłkarska Machina – Livescore & Statystyki</header>
+
+  <div class="container">
+
+    <!-- GLOBAL CONFIG API-FOOTBALL -->
+    <div id="wg-api-football-config"
+         data-host="v3.football.api-sports.io"
+         data-key="f3c7ed02b7e08d0364bd2eb4f56ab2a5"
+         data-theme="dark"
+         data-refresh="60"
+         data-lang="pl">
     </div>
-  </div>
 
-  <!-- STRZELCY LIGI -->
-  <div class="section">
-    <h2>🎯 Strzelcy – Premier League</h2>
-    <div id="wg-api-football-topscorers"
-         data-type="topscorers"
-         data-league="39"
-         data-season="2024">
+    <!-- LIVE -->
+    <div class="section" id="live">
+      <h2>🔴 Mecze na żywo</h2>
+      <div id="wg-api-football-livescore" data-type="livescore"></div>
     </div>
-  </div>
 
-  <!-- H2H -->
-  <div class="section">
-    <h2>⚔️ Head‑to‑Head</h2>
-    <div id="wg-api-football-h2h"
-         data-type="h2h"
-         data-fixture="1035059">
+    <!-- MECZE DNIA -->
+    <div class="section" id="today">
+      <h2>📅 Mecze dzisiaj</h2>
+      <div id="wg-api-football-games" data-type="games"></div>
     </div>
-  </div>
 
-  <!-- STATYSTYKI MECZU -->
-  <div class="section">
-    <h2>📊 Statystyki meczu</h2>
-    <div id="wg-api-football-statistics"
-         data-type="statistics"
-         data-fixture="1035059">
+    <!-- GLOBALNY LIVESCORE (wszystkie mecze) -->
+    <div class="section" id="global-live">
+      <h2>🌍 Globalny livescore</h2>
+      <p>Wszystkie mecze na świecie – możesz przewijać, filtrować w samym widżecie.</p>
+      <div id="wg-api-football-livescore-global" data-type="livescore"></div>
     </div>
-  </div>
 
-  <!-- SKŁADY MECZU -->
-  <div class="section">
-    <h2>🧩 Składy</h2>
-    <div id="wg-api-football-lineups"
-         data-type="lineups"
-         data-fixture="1035059">
+    <!-- TOP 20 LIG -->
+    <div class="section" id="top-leagues">
+      <h2>🌍 Top 20 lig świata</h2>
+      <ul style="line-height: 1.8; font-size: 16px; columns: 2; max-width: 800px;">
+        <li><a href="#league-39">Premier League (ENG)</a></li>
+        <li><a href="#league-140">La Liga (ESP)</a></li>
+        <li><a href="#league-135">Serie A (ITA)</a></li>
+        <li><a href="#league-78">Bundesliga (GER)</a></li>
+        <li><a href="#league-61">Ligue 1 (FRA)</a></li>
+        <li><a href="#league-88">Eredivisie (NED)</a></li>
+        <li><a href="#league-94">Primeira Liga (POR)</a></li>
+        <li><a href="#league-62">Ekstraklasa (POL)</a></li>
+        <li><a href="#league-253">MLS (USA)</a></li>
+        <li><a href="#league-262">Liga MX (MEX)</a></li>
+        <li><a href="#league-71">Brasileirão (BRA)</a></li>
+        <li><a href="#league-128">Liga Profesional (ARG)</a></li>
+        <li><a href="#league-179">Scottish Premiership</a></li>
+        <li><a href="#league-144">Belgian Pro League</a></li>
+        <li><a href="#league-207">Swiss Super League</a></li>
+        <li><a href="#league-218">Austrian Bundesliga</a></li>
+        <li><a href="#league-203">Süper Lig (TUR)</a></li>
+        <li><a href="#league-197">Super League (GRE)</a></li>
+        <li><a href="#league-103">Superliga (DEN)</a></li>
+        <li><a href="#league-318">Fortuna Liga (CZE)</a></li>
+      </ul>
     </div>
-  </div>
 
-  <!-- WIDGET DRUŻYNY -->
-  <div class="section">
-    <h2>🔵 Manchester City – Profil drużyny</h2>
-    <div id="wg-api-football-team"
-         data-type="team"
-         data-team="50">
+    <!-- PRZYKŁAD: PEŁNY BLOK LIGI Z 1/2/3 POZIOMEM – PREMIER LEAGUE -->
+    <div class="section" id="league-39">
+      <h2>🏴 Premier League – 1. poziom</h2>
+      <div class="two-columns">
+        <div>
+          <h3>Tabela</h3>
+          <div data-type="standings" data-league="39" data-season="2024"></div>
+        </div>
+        <div>
+          <h3>Strzelcy</h3>
+          <div data-type="topscorers" data-league="39" data-season="2024"></div>
+        </div>
+      </div>
+      <h3>Terminarz / mecze</h3>
+      <div data-type="games" data-league="39" data-season="2024"></div>
     </div>
+
+    <div class="section">
+      <h2>🏴 Championship – 2. poziom</h2>
+      <div data-type="standings" data-league="40" data-season="2024"></div>
+    </div>
+
+    <div class="section">
+      <h2>🏴 League One – 3. poziom</h2>
+      <div data-type="standings" data-league="41" data-season="2024"></div>
+    </div>
+
+    <!-- PRZYKŁAD: EKSTRAKLASA 1/2/3 POZIOM -->
+    <div class="section" id="league-62">
+      <h2>🇵🇱 Ekstraklasa – 1. poziom</h2>
+      <div class="two-columns">
+        <div>
+          <h3>Tabela</h3>
+          <div data-type="standings" data-league="62" data-season="2025"></div>
+        </div>
+        <div>
+          <h3>Strzelcy</h3>
+          <div data-type="topscorers" data-league="62" data-season="2025"></div>
+        </div>
+      </div>
+      <h3>Mecze</h3>
+      <div data-type="games" data-league="62" data-season="2025"></div>
+    </div>
+
+    <div class="section">
+      <h2>🇵🇱 I Liga – 2. poziom</h2>
+      <div data-type="standings" data-league="63" data-season="2025"></div>
+    </div>
+
+    <div class="section">
+      <h2>🇵🇱 II Liga – 3. poziom</h2>
+      <div data-type="standings" data-league="64" data-season="2025"></div>
+    </div>
+
+    <!-- PROFIL DRUŻYNY PRO -->
+    <div class="section" id="team-profile">
+      <h2>🔵 Profil drużyny PRO</h2>
+      <p>Przykład: Manchester City (team_id = 50). Możemy później podmienić na Twoje ulubione kluby.</p>
+
+      <div class="chips" id="teamChips">
+        <span class="chip active" data-team="50">Manchester City</span>
+        <span class="chip" data-team="40">Liverpool</span>
+        <span class="chip" data-team="33">Manchester United</span>
+        <span class="chip" data-team="49">Chelsea</span>
+      </div>
+
+      <div class="two-columns">
+        <div>
+          <h3>Profil drużyny</h3>
+          <div id="wg-api-football-team" data-type="team" data-team="50"></div>
+        </div>
+        <div>
+          <h3>Ostatnie mecze</h3>
+          <div id="wg-api-football-team-fixtures" data-type="fixtures" data-team="50"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STRONA MECZU PRO -->
+    <div class="section" id="match-page">
+      <h2>⚔️ Strona meczu PRO</h2>
+      <p>Przykład: konkretny mecz (fixture_id = 1035059). Możemy później zrobić wybór meczu z listy.</p>
+
+      <div class="two-columns">
+        <div>
+          <h3>Statystyki meczu</h3>
+          <div id="wg-api-football-statistics"
+               data-type="statistics"
+               data-fixture="1035059">
+          </div>
+
+          <h3>Składy</h3>
+          <div id="wg-api-football-lineups"
+               data-type="lineups"
+               data-fixture="1035059">
+          </div>
+        </div>
+        <div>
+          <h3>Head‑to‑Head</h3>
+          <div id="wg-api-football-h2h"
+               data-type="h2h"
+               data-fixture="1035059">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ULUBIONE DRUŻYNY (localStorage) -->
+    <div class="section" id="favorites">
+      <h2>⭐ Ulubione drużyny</h2>
+      <p>Kliknij gwiazdkę przy drużynie, żeby dodać ją do ulubionych.</p>
+
+      <div>
+        <span>Manchester City</span>
+        <span class="fav-star" data-team="50">☆</span>
+      </div>
+      <div>
+        <span>Liverpool</span>
+        <span class="fav-star" data-team="40">☆</span>
+      </div>
+      <div>
+        <span>Legia Warszawa</span>
+        <span class="fav-star" data-team="295">☆</span>
+      </div>
+
+      <h3>Twoje ulubione:</h3>
+      <div class="fav-list" id="favList"></div>
+    </div>
+
+    <!-- STATYSTYKI GLOBALNE (szkielet pod rozbudowę) -->
+    <div class="section" id="stats-global">
+      <h2>📊 Statystyki globalne (szkielet)</h2>
+      <p>Tu możemy później dodać:</p>
+      <ul>
+        <li>Średnia goli na mecz w sezonie</li>
+        <li>Najczęstsze wyniki (1:0, 2:1 itd.)</li>
+        <li>Rozkład goli po minutach (0–15, 15–30…)</li>
+        <li>Najlepsze ataki / defensywy</li>
+      </ul>
+      <p>To będzie wymagało customowego JS + API, ale layout już jest.</p>
+    </div>
+
   </div>
 
-</div>
+  <script>
+    // DARK / LIGHT MODE
+    const toggleBtn = document.getElementById('toggleTheme');
+    const savedTheme = localStorage.getItem('machina-theme');
+    if (savedTheme === 'light') {
+      document.body.classList.add('light');
+    }
+    toggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+      localStorage.setItem(
+        'machina-theme',
+        document.body.classList.contains('light') ? 'light' : 'dark'
+      );
+    });
+
+    // PRZEŁĄCZANIE DRUŻYN W PROFILU
+    const teamChips = document.getElementById('teamChips');
+    const teamWidget = document.getElementById('wg-api-football-team');
+    const teamFixturesWidget = document.getElementById('wg-api-football-team-fixtures');
+
+    if (teamChips) {
+      teamChips.addEventListener('click', (e) => {
+        const chip = e.target.closest('.chip');
+        if (!chip) return;
+        const teamId = chip.getAttribute('data-team');
+        document.querySelectorAll('#teamChips .chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        if (teamWidget) teamWidget.setAttribute('data-team', teamId);
+        if (teamFixturesWidget) teamFixturesWidget.setAttribute('data-team', teamId);
+      });
+    }
+
+    // ULUBIONE DRUŻYNY (localStorage)
+    const favStars = document.querySelectorAll('.fav-star');
+    const favList = document.getElementById('favList');
+
+    function loadFavorites() {
+      const favs = JSON.parse(localStorage.getItem('machina-favorites') || '[]');
+      favList.innerHTML = '';
+      favs.forEach(f => {
+        const div = document.createElement('div');
+        div.className = 'fav-item';
+        div.textContent = f.name + ' (ID: ' + f.team + ')';
+        favList.appendChild(div);
+      });
+      favStars.forEach(star => {
+        const team = star.getAttribute('data-team');
+        const isFav = favs.some(f => f.team === team);
+        star.textContent = isFav ? '★' : '☆';
+        star.classList.toggle('active', isFav);
+      });
+    }
+
+    function toggleFavorite(team, name) {
+      let favs = JSON.parse(localStorage.getItem('machina-favorites') || '[]');
+      const idx = favs.findIndex(f => f.team === team);
+      if (idx >= 0) {
+        favs.splice(idx, 1);
+      } else {
+        favs.push({ team, name });
+      }
+      localStorage.setItem('machina-favorites', JSON.stringify(favs));
+      loadFavorites();
+    }
+
+    favStars.forEach(star => {
+      star.addEventListener('click', () => {
+        const team = star.getAttribute('data-team');
+        const name = star.previousSibling.textContent.trim();
+        toggleFavorite(team, name);
+      });
+    });
+
+    loadFavorites();
+  </script>
 
 </body>
 </html>
