@@ -4,214 +4,86 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GB SCORE - Centrum Analityczne</title>
-    
     <script type="module" src="https://widgets.api-sports.io/3.1.0/widgets.js"></script>
     
     <style>
-        :root {
-            --primary-color: #00d26a;
-            --bg-color: #0d1117;
-            --panel-bg: #161b22;
-            --text-color: #c9d1d9;
-            --border-color: #30363d;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        header h1 {
-            color: var(--primary-color);
-            margin: 0;
-            font-size: 2.5rem;
-            letter-spacing: 2px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* Stylizacja Akordeonów (Rozwijanych paneli) */
-        details {
-            background-color: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            margin-bottom: 15px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        summary {
-            padding: 20px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            cursor: pointer;
-            list-style: none; /* Ukrywa domyślną strzałkę */
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #1c2128;
-            color: #fff;
-        }
-
-        summary::-webkit-details-marker {
-            display: none;
-        }
-
-        summary:after {
-            content: '▼';
-            font-size: 0.9rem;
-            color: var(--primary-color);
-        }
-
-        details[open] summary:after {
-            content: '▲';
-        }
-
-        .leagues-wrapper {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            border-top: 1px solid var(--border-color);
-        }
+        :root { --primary-color: #00d26a; --bg-color: #0d1117; --panel-bg: #161b22; --text-color: #c9d1d9; --border-color: #30363d; }
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 20px; }
+        header { text-align: center; margin-bottom: 20px; }
+        header h1 { color: var(--primary-color); font-size: 2.5rem; margin: 0; text-transform: uppercase; letter-spacing: 2px; }
+        .controls { text-align: center; margin-bottom: 30px; background: var(--panel-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); max-width: 1000px; margin: 0 auto 30px auto; }
+        input[type="date"] { background: #0d1117; color: white; border: 1px solid var(--primary-color); padding: 10px; border-radius: 5px; cursor: pointer; font-size: 1rem; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        details { background-color: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
+        summary { padding: 15px 20px; cursor: pointer; display: flex; align-items: center; gap: 15px; font-weight: 600; font-size: 1.1rem; background: #1c2128; }
+        .flag { font-size: 1.5rem; }
+        .leagues-wrapper { padding: 15px; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 15px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>GB SCORE</h1>
-        <p>Analiza Liderów i Weryfikacja Składów</p>
-    </header>
+    <header><h1>GB SCORE</h1></header>
 
-    <!-- KONFIGURACJA GŁÓWNA -->
-    <api-sports-widget 
-        data-type="config" 
-        data-key="f3c7ed02b7e08d0364bd2eb4f56ab2a5" 
-        data-sport="football" 
-        data-lang="pl"
-        data-theme="dark"
-        data-odds="true"
-        data-live="true">
-    </api-sports-widget>
-
-    <div class="container" id="countries-list">
-
-        <h2>🔥 TOP 20 (Rozgrywki do 3. poziomu)</h2>
-
-        <!-- ANGLIA -->
-        <details>
-            <summary>🏴󠁧󠁢󠁥󠁮󠁧󠁿 Anglia</summary>
-            <!-- data-leagues zawiera ID lig oddzielone przecinkiem (Premier League, Championship, League One) -->
-            <div class="leagues-wrapper" data-leagues="39,40,41"></div>
-        </details>
-
-        <!-- HISZPANIA -->
-        <details>
-            <summary>🇪🇸 Hiszpania</summary>
-            <!-- La Liga, Segunda, Primera RFEF -->
-            <div class="leagues-wrapper" data-leagues="140,141,142"></div>
-        </details>
-
-        <!-- NIEMCY -->
-        <details>
-            <summary>🇩🇪 Niemcy</summary>
-            <div class="leagues-wrapper" data-leagues="78,79,80"></div>
-        </details>
-
-        <!-- WŁOCHY -->
-        <details>
-            <summary>🇮🇹 Włochy</summary>
-            <div class="leagues-wrapper" data-leagues="135,136,137"></div>
-        </details>
-
-        <!-- FRANCJA -->
-        <details>
-            <summary>🇫🇷 Francja</summary>
-            <div class="leagues-wrapper" data-leagues="61,62,63"></div>
-        </details>
-
-        <!-- POLSKA -->
-        <details>
-            <summary>🇵🇱 Polska</summary>
-            <div class="leagues-wrapper" data-leagues="253,254,255"></div>
-        </details>
-
-        <!-- HOLANDIA -->
-        <details>
-            <summary>🇳🇱 Holandia</summary>
-            <div class="leagues-wrapper" data-leagues="88,89,90"></div>
-        </details>
-
-        <!-- PORTUGALIA -->
-        <details>
-            <summary>🇵🇹 Portugalia</summary>
-            <div class="leagues-wrapper" data-leagues="94,95,96"></div>
-        </details>
-
-
-        <h2 style="margin-top: 50px;">🎯 KOLEJNE 10 (Rozgrywki do 2. poziomu)</h2>
-
-        <!-- TURCJA -->
-        <details>
-            <summary>🇹🇷 Turcja</summary>
-            <div class="leagues-wrapper" data-leagues="203,204"></div>
-        </details>
-
-        <!-- SZKOCJA -->
-        <details>
-            <summary>🏴󠁧󠁢󠁳󠁣󠁴󠁿 Szkocja</summary>
-            <div class="leagues-wrapper" data-leagues="179,180"></div>
-        </details>
-        
-        <!-- BELGIA -->
-        <details>
-            <summary>🇧🇪 Belgia</summary>
-            <div class="leagues-wrapper" data-leagues="144,145"></div>
-        </details>
-
+    <div class="controls">
+        <label>Wybierz datę analizy: </label>
+        <input type="date" id="globalDate" value="2026-05-22">
     </div>
 
-    <!-- SILNIK LENIWEGO ŁADOWANIA WIDŻETÓW -->
-    <script>
-        // Skrypt nasłuchuje kliknięcia w dany kraj. Gdy go otworzysz, generuje widżety.
-        document.querySelectorAll('details').forEach(detail => {
-            detail.addEventListener('toggle', function() {
-                // Sprawdza, czy panel został otwarty i czy dane nie zostały już pobrane
-                if (this.open && !this.dataset.loaded) {
-                    const wrapper = this.querySelector('.leagues-wrapper');
-                    const leagues = wrapper.dataset.leagues.split(',');
-                    
-                    // Dla każdego ID ligi generuje fizyczny widget API-Sports
-                    leagues.forEach(leagueId => {
-                        const widget = document.createElement('api-sports-widget');
-                        widget.setAttribute('data-type', 'games');
-                        widget.setAttribute('data-date', 'today');
-                        widget.setAttribute('data-league', leagueId.trim());
-                        
-                        // Modale Ultra - wszystko ładuje się w nakładce po kliknięciu
-                        widget.setAttribute('data-target-game', 'modal');
-                        widget.setAttribute('data-target-team', 'modal');
-                        
-                        wrapper.appendChild(widget);
-                    });
-                    
-                    // Zabezpieczenie przed ponownym generowaniem tych samych widżetów
-                    this.dataset.loaded = 'true';
-                }
-            });
-        });
-    </script>
+    <api-sports-widget data-type="config" data-key="f3c7ed02b7e08d0364bd2eb4f56ab2a5" data-sport="football" data-lang="pl" data-theme="dark" data-odds="true"></api-sports-widget>
 
+    <div class="container">
+        <details><summary><span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span> Anglia</summary><div class="leagues-wrapper" data-leagues="39,40,41"></div></details>
+        <details><summary><span class="flag">🇪🇸</span> Hiszpania</summary><div class="leagues-wrapper" data-leagues="140,141,142"></div></details>
+        <details><summary><span class="flag">🇩🇪</span> Niemcy</summary><div class="leagues-wrapper" data-leagues="78,79,80"></div></details>
+        <details><summary><span class="flag">🇮🇹</span> Włochy</summary><div class="leagues-wrapper" data-leagues="135,136,137"></div></details>
+        <details><summary><span class="flag">🇫🇷</span> Francja</summary><div class="leagues-wrapper" data-leagues="61,62,63"></div></details>
+        <details><summary><span class="flag">🇵🇱</span> Polska</summary><div class="leagues-wrapper" data-leagues="253,254,255"></div></details>
+        <details><summary><span class="flag">🇳🇱</span> Holandia</summary><div class="leagues-wrapper" data-leagues="88,89,90"></div></details>
+        <details><summary><span class="flag">🇵🇹</span> Portugalia</summary><div class="leagues-wrapper" data-leagues="94,95,96"></div></details>
+        <details><summary><span class="flag">🇧🇷</span> Brazylia</summary><div class="leagues-wrapper" data-leagues="71,72,73"></div></details>
+        <details><summary><span class="flag">🇦🇷</span> Argentyna</summary><div class="leagues-wrapper" data-leagues="128,129,130"></div></details>
+        <details><summary><span class="flag">🇷🇺</span> Rosja</summary><div class="leagues-wrapper" data-leagues="235,236,237"></div></details>
+        <details><summary><span class="flag">🇲🇽</span> Meksyk</summary><div class="leagues-wrapper" data-leagues="262,263,264"></div></details>
+        <details><summary><span class="flag">🇺🇸</span> USA</summary><div class="leagues-wrapper" data-leagues="253,254,255"></div></details>
+        <details><summary><span class="flag">🇬🇷</span> Grecja</summary><div class="leagues-wrapper" data-leagues="197,198,199"></div></details>
+        <details><summary><span class="flag">🇦🇹</span> Austria</summary><div class="leagues-wrapper" data-leagues="218,219,220"></div></details>
+        <details><summary><span class="flag">🇨🇭</span> Szwajcaria</summary><div class="leagues-wrapper" data-leagues="207,208,209"></div></details>
+        <details><summary><span class="flag">🇩🇰</span> Dania</summary><div class="leagues-wrapper" data-leagues="119,120,121"></div></details>
+        <details><summary><span class="flag">🇳🇴</span> Norwegia</summary><div class="leagues-wrapper" data-leagues="103,104,105"></div></details>
+        <details><summary><span class="flag">🇸🇪</span> Szwecja</summary><div class="leagues-wrapper" data-leagues="113,114,115"></div></details>
+        <details><summary><span class="flag">🇨🇿</span> Czechy</summary><div class="leagues-wrapper" data-leagues="245,246,247"></div></details>
+
+        <details><summary><span class="flag">🇹🇷</span> Turcja</summary><div class="leagues-wrapper" data-leagues="203,204"></div></details>
+        <details><summary><span class="flag">🏴󠁧󠁢󠁳󠁣󠁴󠁿</span> Szkocja</summary><div class="leagues-wrapper" data-leagues="179,180"></div></details>
+        <details><summary><span class="flag">🇧🇪</span> Belgia</summary><div class="leagues-wrapper" data-leagues="144,145"></div></details>
+        <details><summary><span class="flag">🇭🇷</span> Chorwacja</summary><div class="leagues-wrapper" data-leagues="210,211"></div></details>
+        <details><summary><span class="flag">🇷🇴</span> Rumunia</summary><div class="leagues-wrapper" data-leagues="283,284"></div></details>
+        <details><summary><span class="flag">🇭🇺</span> Węgry</summary><div class="leagues-wrapper" data-leagues="271,272"></div></details>
+        <details><summary><span class="flag">🇨🇱</span> Chile</summary><div class="leagues-wrapper" data-leagues="265,266"></div></details>
+        <details><summary><span class="flag">🇰🇷</span> Korea Płd.</summary><div class="leagues-wrapper" data-leagues="293,294"></div></details>
+        <details><summary><span class="flag">🇯🇵</span> Japonia</summary><div class="leagues-wrapper" data-leagues="98,99"></div></details>
+        <details><summary><span class="flag">🇫🇮</span> Finlandia</summary><div class="leagues-wrapper" data-leagues="228,229"></div></details>
+    </div>
+
+    <script>
+        function updateWidgets() {
+            const date = document.getElementById('globalDate').value;
+            document.querySelectorAll('details[open]').forEach(detail => {
+                const wrapper = detail.querySelector('.leagues-wrapper');
+                const leagues = wrapper.dataset.leagues.split(',');
+                wrapper.innerHTML = '';
+                leagues.forEach(id => {
+                    const w = document.createElement('api-sports-widget');
+                    w.setAttribute('data-type', 'games');
+                    w.setAttribute('data-date', date);
+                    w.setAttribute('data-league', id.trim());
+                    w.setAttribute('data-target-game', 'modal');
+                    wrapper.appendChild(w);
+                });
+            });
+        }
+        document.getElementById('globalDate').addEventListener('change', updateWidgets);
+        document.querySelectorAll('details').forEach(d => d.addEventListener('toggle', updateWidgets));
+    </script>
 </body>
 </html>
