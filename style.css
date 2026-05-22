@@ -1,4 +1,4 @@
-/* BAZOWE USTAWIENIA (działają wszędzie) */
+/* BAZOWE USTAWIENIA */
 body { 
   margin: 0; 
   background-color: #f4f6f9; 
@@ -14,37 +14,35 @@ body {
   transition: background-color 0.2s ease-in-out;
 }
 
-
-/* --- USTAWIENIA DLA SMARTFONÓW (Domyślne) --- */
-/* Ograniczamy wysokość widgetów z ligami i meczami, aby można było łatwo 
-   zjechać palcem do tabeli i szczegółów meczu na dole ekranu */
+/* --- USTAWIENIA DLA SMARTFONÓW --- */
 #collapseLeagues api-sports-widget, 
 #games-list api-sports-widget { 
-  max-height: 55vh; /* Zajmuje maksymalnie 55% wysokości ekranu telefonu */
+  max-height: 55vh; 
   overflow-y: auto; 
 }
-
 
 /* --- USTAWIENIA DLA DESKTOPÓW (Ekrany szersze niż 768px) --- */
 @media (min-width: 768px) {
   
-  /* Włączamy "przyklejanie" do ekranu tylko na komputerach i dużych tabletach */
+  /* Przyklejanie elementów */
   #game-content, #leagues-card { 
     position: sticky; 
     top: 80px; 
     overflow-y: auto; 
   }
 
-  /* Na komputerze możemy pozwolić widgetom zająć prawie całą wysokość ekranu */
-  #game-content api-sports-widget, 
-  #collapseLeagues api-sports-widget,
+  /* Zwiększamy wysokość listy meczów - teraz ma więcej miejsca po usunięciu tabeli */
   #games-list api-sports-widget { 
-    max-height: calc(100vh - 120px); 
+    max-height: calc(100vh - 150px); 
   }
 
-  #standings-content api-sports-widget, 
+  #collapseLeagues api-sports-widget { 
+    max-height: calc(100vh - 150px); 
+  }
+
+  /* Sekcja "Informacje o drużynie" */
   #team-content api-sports-widget { 
-    margin-bottom: 1rem; 
-    max-height: 55vh; 
+    max-height: 40vh; /* Nieco mniej, żeby "Szczegóły meczu" zawsze były widoczne pod spodem */
+    overflow-y: auto;
   }
 }
