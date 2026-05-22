@@ -1,22 +1,48 @@
+/* Główne ustawienia strony */
 body { 
   margin: 0; 
-  background-color: #1a1a1a;
+  background-color: #121212;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
+
 .container-fluid, .content { 
   max-width: 1440px; 
   margin: auto; 
 }
-/* Utrzymywanie okienek w miejscu przy przewijaniu */
-#game-content, #leagues-list { 
-  position: sticky; 
-  top: 70px; 
-  overflow-y: auto; 
+
+/* Stylowanie nagłówków kart */
+.card-header {
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  padding: 10px 15px !important;
 }
-#game-content api-sports-widget, #leagues-list api-sports-widget { 
-  max-height: calc(100vh - 100px); 
+
+/* Przyklejanie i przewijanie bocznych kolumn na dużych ekranach (Desktop) */
+@media (min-width: 992px) {
+  #leagues-list, #game-content { 
+    position: sticky; 
+    top: 85px; 
+    overflow-y: auto; 
+  }
+  
+  #leagues-list api-sports-widget, 
+  #game-content api-sports-widget { 
+    max-height: calc(100vh - 140px); 
+  }
 }
+
+/* Ograniczenie wysokości dla płynnego przewijania dynamicznych sekcji */
 #standings-content api-sports-widget, 
+#predictions-content api-sports-widget,
 #team-content api-sports-widget { 
-  margin-bottom: 1rem; 
-  max-height: 55vh; 
+  margin-bottom: 0; 
+  max-height: 50vh; 
+  overflow-y: auto;
+}
+
+/* Estetyczne dopasowanie zaokrągleń widgetów do kart Bootstrapa */
+api-sports-widget {
+  display: block;
+  border-radius: 0 0 var(--bs-card-inner-border-radius) var(--bs-card-inner-border-radius);
 }
