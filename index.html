@@ -1,164 +1,28 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <title>⚽ Top 30 lig – API‑FOOTBALL</title>
+  <meta charset="utf-8" />
+  <title>API‑FOOTBALL Widgets</title>
 
   <!-- Oficjalny loader widgetów -->
   <script type="module" src="https://widgets.api-sports.io/football/1.1.8/widget.js"></script>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: #fff;
-    }
-    .menu {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      padding: 15px;
-      background: #000;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    .menu button {
-      padding: 8px 14px;
-      background: #222;
-      border: 1px solid #444;
-      color: #fff;
-      cursor: pointer;
-      border-radius: 6px;
-      font-size: 14px;
-    }
-    .menu button:hover {
-      background: #333;
-    }
-    #content {
-      padding: 20px;
-    }
-    h2 {
-      margin-top: 40px;
-      margin-bottom: 10px;
-      font-size: 22px;
-      color: #00aaff;
-    }
-  </style>
 </head>
 <body>
 
   <!-- KONFIG WIDGETÓW -->
   <div id="wg-api-football-config"
        data-host="v3.football.api-sports.io"
-       data-key="f3c7ed02b7e08d0364bd2eb4f56ab2a5"
+       data-key="TWÓJ_KLUCZ_API"
        data-theme="dark"
        data-refresh="60"
        data-lang="pl">
   </div>
 
-  <!-- MENU LIG -->
-  <div class="menu" id="leagueMenu"></div>
-
-  <!-- TU ŁADUJEMY WIDGETY -->
-  <div id="content">
-    <h2>Wybierz ligę z góry, aby wyświetlić widgety</h2>
-  </div>
-
-  <script>
-    // TOP 30 LIG – po polsku, intuicyjnie
-    const LEAGUES = [
-      { name: "Premier League (Anglia)", id: 39, season: 2024 },
-      { name: "Championship (Anglia)", id: 40, season: 2024 },
-      { name: "League One (Anglia)", id: 41, season: 2024 },
-
-      { name: "La Liga (Hiszpania)", id: 140, season: 2024 },
-      { name: "La Liga 2 (Hiszpania)", id: 141, season: 2024 },
-      { name: "Primera RFEF (Hiszpania)", id: 142, season: 2024 },
-
-      { name: "Serie A (Włochy)", id: 135, season: 2024 },
-      { name: "Serie B (Włochy)", id: 136, season: 2024 },
-      { name: "Serie C (Włochy)", id: 137, season: 2024 },
-
-      { name: "Bundesliga (Niemcy)", id: 78, season: 2024 },
-      { name: "2. Bundesliga (Niemcy)", id: 79, season: 2024 },
-      { name: "3. Liga (Niemcy)", id: 80, season: 2024 },
-
-      { name: "Ligue 1 (Francja)", id: 61, season: 2024 },
-      { name: "Ligue 2 (Francja)", id: 62, season: 2024 },
-      { name: "National (Francja)", id: 63, season: 2024 },
-
-      { name: "Eredivisie (Holandia)", id: 88, season: 2024 },
-      { name: "Eerste Divisie (Holandia)", id: 89, season: 2024 },
-      { name: "Tweede Divisie (Holandia)", id: 90, season: 2024 },
-
-      { name: "Primeira Liga (Portugalia)", id: 94, season: 2024 },
-      { name: "Liga Portugal 2 (Portugalia)", id: 95, season: 2024 },
-
-      { name: "Ekstraklasa (Polska)", id: 62, season: 2025 },
-      { name: "I Liga (Polska)", id: 63, season: 2025 },
-      { name: "II Liga (Polska)", id: 64, season: 2025 },
-
-      { name: "MLS (USA)", id: 253, season: 2024 },
-      { name: "Liga MX (Meksyk)", id: 262, season: 2024 },
-
-      { name: "Serie A (Brazylia)", id: 71, season: 2024 },
-      { name: "Liga Profesional (Argentyna)", id: 128, season: 2024 },
-
-      { name: "Premiership (Szkocja)", id: 179, season: 2024 },
-      { name: "Pro League (Belgia)", id: 144, season: 2024 },
-      { name: "Super League (Szwajcaria)", id: 207, season: 2024 },
-      { name: "Bundesliga (Austria)", id: 218, season: 2024 }
-    ];
-
-    // GENERUJ MENU
-    const menu = document.getElementById("leagueMenu");
-    LEAGUES.forEach(l => {
-      const btn = document.createElement("button");
-      btn.textContent = l.name;
-      btn.onclick = () => loadLeague(l);
-      menu.appendChild(btn);
-    });
-
-    // ŁADOWANIE WIDGETÓW
-    function loadLeague(league) {
-      const content = document.getElementById("content");
-      content.innerHTML = `
-        <h2>${league.name}</h2>
-
-        <h3>Tabela</h3>
-        <div data-type="standings"
-             data-league="${league.id}"
-             data-season="${league.season}">
-        </div>
-
-        <h3>Mecze</h3>
-        <div data-type="games"
-             data-league="${league.id}"
-             data-season="${league.season}">
-        </div>
-
-        <h3>Strzelcy</h3>
-        <div data-type="topscorers"
-             data-league="${league.id}"
-             data-season="${league.season}">
-        </div>
-
-        <h3>Asysty</h3>
-        <div data-type="topassists"
-             data-league="${league.id}"
-             data-season="${league.season}">
-        </div>
-
-        <h3>Czyste konta</h3>
-        <div data-type="topclean"
-             data-league="${league.id}"
-             data-season="${league.season}">
-        </div>
-      `;
-    }
-  </script>
+  <!-- PRZYKŁADOWE WIDGETY zgodnie z dokumentacją -->
+  <div data-type="livescore"></div>
+  <div data-type="games"></div>
+  <div data-type="standings" data-league="39" data-season="2024"></div>
+  <div data-type="topscorers" data-league="39" data-season="2024"></div>
 
 </body>
 </html>
