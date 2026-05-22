@@ -12,50 +12,26 @@
   <nav class="header navbar navbar-expand-lg bg-white shadow-sm sticky-top border-bottom">
     <div class="container-fluid d-flex justify-content-between align-items-center">
       <a class="navbar-brand fw-bold text-success" href="/">GREEN BEANS SCORE</a>
-      <a href="https://www.siepomaga.pl/" target="_blank" rel="noopener noreferrer" class="btn btn-danger fw-bold px-4 shadow-sm">
-        POMAGAMY !!
-      </a>
+      <a href="https://www.siepomaga.pl/" target="_blank" rel="noopener noreferrer" class="btn btn-danger fw-bold px-4 shadow-sm">POMAGAMY !!</a>
     </div>
   </nav>
 
   <div class="content p-3">
     <div class="row">
       <div class="col-12 col-md-3 mb-3">
-        <div id="leagues-card" class="card bg-white shadow-sm border-0">
-          <div class="card-header bg-success text-white text-center fw-bold" data-bs-toggle="collapse" data-bs-target="#collapseLeagues" style="cursor: pointer;">
-            Wybierz Ligę ⬇
-          </div>
+        <div class="card bg-white shadow-sm border-0">
+          <div class="card-header bg-success text-white text-center fw-bold" data-bs-toggle="collapse" data-bs-target="#collapseLeagues" style="cursor: pointer;">Wybierz Ligę ⬇</div>
           <div id="collapseLeagues" class="collapse show">
-            <div class="card-body p-0">
-              <api-sports-widget data-type="leagues"></api-sports-widget>
-            </div>
+            <div class="card-body p-0"><api-sports-widget data-type="leagues"></api-sports-widget></div>
           </div>
         </div>
       </div>
       
-      <div class="col-12 col-md-5 mb-3">
-        <div id="games-list-container" class="card bg-white shadow-sm border-0">
-          <div class="card-header bg-light text-dark text-center fw-bold border-bottom">Mecze</div>
-          <div class="card-body p-0">
-            <div id="games-list">
-              <api-sports-widget data-type="games"></api-sports-widget>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="col-12 col-md-4 mb-3">
-        <div class="card bg-white shadow-sm border-0 mb-3">
-          <div class="card-header bg-light text-dark text-center fw-bold border-bottom">Informacje o drużynie</div>
-          <div class="card-body p-0">
-            <div id="team-content"></div>
-          </div>
-        </div>
-
-        <div id="game-content" class="card bg-white shadow-sm border-0">
-          <div class="card-header bg-light text-dark text-center fw-bold border-bottom">Szczegóły meczu i Kursy</div>
-          <div class="card-body p-0">
-             <api-sports-widget data-type="game"></api-sports-widget>
+      <div class="col-12 col-md-9 mb-3">
+        <div class="card bg-white shadow-sm border-0">
+          <div class="card-header bg-success text-white text-center fw-bold" data-bs-toggle="collapse" data-bs-target="#collapseGames" style="cursor: pointer;">Dzisiejsze Mecze (Zwiń/Rozwiń) ⬇</div>
+          <div id="collapseGames" class="collapse show">
+            <div class="card-body p-0"><div id="games-list"><api-sports-widget data-type="games"></api-sports-widget></div></div>
           </div>
         </div>
       </div>
@@ -74,14 +50,15 @@
     data-show-predictions="true"
     data-show-logos="true" 
     data-refresh="20" 
+    data-favorite="true"
     data-player-injuries="true" 
     data-team-squad="true" 
     data-team-statistics="true" 
     data-player-statistics="true" 
     data-tab="games" 
     data-target-league="#games-list" 
-    data-target-team="#team-content" 
-    data-target-game="#game-content .card-body">
+    data-target-team="modal" 
+    data-target-game="modal">
   </api-sports-widget>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
