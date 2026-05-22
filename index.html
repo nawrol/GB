@@ -40,20 +40,6 @@
     </div>
   </div>
 
-  <!-- Modal (używany zarówno przez widget jak i przez nas) -->
-  <div class="modal fade" id="matchModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content bg-dark text-light border-success">
-        <div class="modal-header border-success">
-          <h5 class="modal-title" id="modalTitle">Szczegóły meczu</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body p-0" id="modalBody"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- GŁÓWNA KONFIGURACJA WIDGETU -->
   <api-sports-widget 
     data-type="config" 
     data-sport="football" 
@@ -61,8 +47,8 @@
     data-lang="pl" 
     data-theme="dark" 
     data-odds="true"
-    data-odds-type="1x2,over_under"
-    data-odds-provider="all"
+    data-odds-type="1x2,over_under,btts,double_chance"
+    data-odds-provider="1"
     data-show-predictions="true"
     data-show-logos="true" 
     data-refresh="15" 
@@ -78,6 +64,5 @@
   </api-sports-widget>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="script.js"></script>
 </body>
 </html>
