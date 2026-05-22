@@ -1,66 +1,25 @@
-body { 
-  margin: 0; 
-  background-color: #0d1117; 
-}
-
-.container-fluid, .content { 
-  max-width: 1440px; 
-  margin: auto; 
-}
-
-.card, .modal-content {
-  background-color: #161b22 !important;
-  border-color: #30363d !important;
-}
-
-.card-header {
-  background-color: #238636 !important;
-  color: white;
-}
+body { margin: 0; background-color: #f4f6f9; }
+.container-fluid, .content { max-width: 1440px; margin: auto; }
 
 .card-header[data-bs-toggle="collapse"]:hover {
-  background-color: #2ea043 !important;
+  background-color: #146c43 !important;
+  transition: background-color 0.2s ease-in-out;
 }
 
-/* Modal API-Sports */
+/* Zapewnienie poprawnego działania wyskakujących okien (Modali) */
 .api-sports-modal {
-  z-index: 2000 !important;
+    z-index: 2000 !important;
 }
 
-/* === MOCNE STYLOWANIE ODDSÓW W MODALU WIDGETU === */
-#modalBody .card,
-.modal-content .card {
-  background-color: #21262d !important;
-  border: 2px solid #39d353 !important;
-  margin: 12px !important;
-}
-
-#modalBody .card-header,
-.modal-content .card-header {
-  background-color: #238636 !important;
-  color: white;
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-
-#modalBody .odds-value,
-.modal-content .odds-value,
-#modalBody strong,
-.modal-content strong {
-  font-size: 1.9rem !important;
-  font-weight: 900;
-  color: #39d353 !important;
-}
-
-/* SMARTFONY */
+/* SMARTFONY - większa czytelność listy meczów */
 @media (max-width: 767px) {
-  #games-list api-sports-widget { 
-    max-height: 70vh; 
-    overflow-y: auto; 
-  }
+    #games-list api-sports-widget { 
+        max-height: 70vh; 
+        overflow-y: auto; 
+    }
 }
 
-/* DESKTOP */
+/* DESKTOPOWE - układ */
 @media (min-width: 768px) {
   #games-list api-sports-widget { 
     max-height: calc(100vh - 150px); 
