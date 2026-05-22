@@ -1,19 +1,22 @@
-/* style.css */
-body {
-    background-color: #121212;
-    color: #ffffff;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
+body { 
+  margin: 0; 
+  background-color: #1a1a1a;
 }
-
-.widgets-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
+.container-fluid, .content { 
+  max-width: 1440px; 
+  margin: auto; 
 }
-
-.widget-column {
-    flex: 1;
-    min-width: 320px;
+/* Utrzymywanie okienek w miejscu przy przewijaniu */
+#game-content, #leagues-list { 
+  position: sticky; 
+  top: 70px; 
+  overflow-y: auto; 
+}
+#game-content api-sports-widget, #leagues-list api-sports-widget { 
+  max-height: calc(100vh - 100px); 
+}
+#standings-content api-sports-widget, 
+#team-content api-sports-widget { 
+  margin-bottom: 1rem; 
+  max-height: 55vh; 
 }
