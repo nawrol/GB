@@ -1,68 +1,32 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
   <title></title>
   
-  <script type="module" crossorigin src="https://widgets.api-sports.io/3.1.0/widgets.js"></script>
-
   <style>
-    /* Absolutne minimum, żeby zachować mroczny klimat i 3 kolumny */
-    body { 
-      background-color: #121212; 
-      color: #ffffff; 
-      font-family: Arial, sans-serif; 
-      margin: 20px;
-    }
-    .grid-container {
-      display: flex;
-      gap: 20px;
-      align-items: flex-start;
-    }
-    .column {
-      flex: 1;
-      min-width: 300px;
-    }
-    h2 {
-      font-size: 14px;
-      text-transform: uppercase;
-      color: #4CAF50;
-      border-bottom: 1px solid #333;
-      padding-bottom: 5px;
-    }
+    body { background-color: #121212; color: #fff; font-family: sans-serif; margin: 0; padding: 20px; }
+    .widgets-wrapper { display: flex; flex-wrap: wrap; gap: 20px; }
+    .widget-column { flex: 1; min-width: 320px; }
   </style>
+
+  <script type="module" crossorigin src="https://widgets.api-sports.io/3.1.0/widgets.js"></script>
 </head>
 <body>
 
-  <h1>🐅 CSS</h1>
-
-  <div class="grid-container">
-    
-    <div class="column">
-      <h2>Rozgrywki</h2>
+  <div class="widgets-wrapper">
+    <div class="widget-column">
       <api-sports-widget data-type="leagues"></api-sports-widget>
     </div>
-    
-    <div class="column">
-      <h2>Terminarz</h2>
-      <div id="wg-games">
-        <api-sports-widget data-type="games"></api-sports-widget>
-      </div>
-    </div>
-    
-    <div class="column">
-      <h2>Szczegóły Meczu</h2>
-      <div id="wg-game">
-        <p style="color: #666; font-size: 12px;">Wybierz mecz z terminarza...</p>
-      </div>
 
-      <h2 style="margin-top: 30px;">Informacje o Klubie</h2>
-      <div id="wg-team">
-        <p style="color: #666; font-size: 12px;">Kliknij herb w szczegółach meczu...</p>
-      </div>
+    <div class="widget-column" id="wg-games">
+      <api-sports-widget data-type="games"></api-sports-widget>
     </div>
 
+    <div class="widget-column">
+      <div id="wg-game"></div>
+      <div id="wg-team" style="margin-top: 20px;"></div>
+    </div>
   </div>
 
   <api-sports-widget 
