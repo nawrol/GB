@@ -8,8 +8,8 @@
   <script type="module" crossorigin src="https://widgets.api-sports.io/3.1.0/widgets.js"></script>
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
-<body class="bg-light">
-  <nav class="header navbar navbar-expand-lg bg-white shadow-sm sticky-top border-bottom">
+<body class="bg-dark text-light">
+  <nav class="header navbar navbar-expand-lg bg-dark shadow-sm sticky-top border-bottom border-success">
     <div class="container-fluid d-flex justify-content-between align-items-center">
       <a class="navbar-brand fw-bold text-success" href="/">GREEN BEANS SCORE</a>
       <a href="https://www.siepomaga.pl/" target="_blank" rel="noopener noreferrer" class="btn btn-danger fw-bold px-4 shadow-sm">POMAGAMY !!</a>
@@ -19,7 +19,7 @@
   <div class="content p-3">
     <div class="row">
       <div class="col-12 col-md-3 mb-3">
-        <div class="card bg-white shadow-sm border-0">
+        <div class="card bg-dark border-success shadow-sm">
           <div class="card-header bg-success text-white text-center fw-bold" data-bs-toggle="collapse" data-bs-target="#collapseLeagues" style="cursor: pointer;">Wybierz Ligę ⬇</div>
           <div id="collapseLeagues" class="collapse show">
             <div class="card-body p-0"><api-sports-widget data-type="leagues"></api-sports-widget></div>
@@ -29,29 +29,34 @@
       
       <div class="col-12 col-md-9 mb-3">
         <button class="btn btn-sm btn-outline-success w-100 mb-2" onclick="location.reload();">🔄 Odśwież i wróć do listy</button>
-        <div class="card bg-white shadow-sm border-0">
+        
+        <div class="card bg-dark border-success shadow-sm">
           <div class="card-header bg-success text-white text-center fw-bold">Dzisiejsze Mecze</div>
-          <div class="card-body p-0"><div id="games-list"><api-sports-widget data-type="games"></api-sports-widget></div></div>
+          <div class="card-body p-0">
+            <div id="games-list"><api-sports-widget data-type="games"></api-sports-widget></div>
+          </div>
         </div>
         
-        <div id="game-detail-wrapper" class="mt-4">
-            <div class="card bg-white shadow-sm border-0">
-                <div class="card-header bg-dark text-white text-center fw-bold">Szczegóły meczu i Kursy</div>
-                <div class="card-body p-0">
-                    <div id="game-target"></div>
-                </div>
+        <!-- Szczegóły meczu w modalu -->
+        <div id="game-detail-wrapper" class="mt-4 d-none">
+          <div class="card bg-dark border-success shadow-sm">
+            <div class="card-header bg-success text-white text-center fw-bold">Szczegóły meczu i Kursy</div>
+            <div class="card-body p-0">
+              <div id="game-target"></div>
             </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Główna konfiguracja widgetu -->
   <api-sports-widget 
     data-type="config" 
     data-sport="football" 
     data-key="f3c7ed02b7e08d0364bd2eb4f56ab2a5" 
     data-lang="pl" 
-    data-theme="light" 
+    data-theme="dark" 
     data-odds="true"
     data-odds-type="1x2"
     data-odds-provider="1"
@@ -65,8 +70,8 @@
     data-player-statistics="true" 
     data-tab="games" 
     data-target-league="#games-list" 
-    data-target-team="modal" 
-    data-target-game="#game-target">
+    data-target-game="modal"           <!-- KLUCZOWA ZMIANA -->
+    data-target-team="modal">
   </api-sports-widget>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
