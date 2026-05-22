@@ -1,7 +1,5 @@
-body { 
-  margin: 0; 
-  background-color: #0d1117; 
-}
+body { background-color: #0d1117; margin: 0; }
+.content { max-width: 1440px; margin: auto; }
 
 .card, .modal-content {
   background-color: #161b22 !important;
@@ -10,16 +8,25 @@ body {
 
 .card-header {
   background-color: #238636 !important;
+  color: white;
 }
 
-.card-header[data-bs-toggle="collapse"]:hover {
-  background-color: #2ea043 !important;
+.btn-outline-success {
+  border-color: #238636;
+  color: #238636;
 }
 
-.api-sports-modal {
-  z-index: 2000 !important;
+.btn-outline-success.active,
+.btn-outline-success:hover {
+  background-color: #238636;
+  color: white;
 }
 
-@media (max-width: 767px) {
-  #games-list api-sports-widget { max-height: 70vh; overflow-y: auto; }
+.api-sports-modal { z-index: 2000 !important; }
+
+#value-bets .list-group-item {
+  background-color: #161b22;
+  border-bottom: 1px solid #30363d;
 }
+
+.badge-success { background-color: #238636; }
