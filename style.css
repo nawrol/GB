@@ -1,48 +1,33 @@
-/* BAZOWE USTAWIENIA */
-body { 
-  margin: 0; 
-  background-color: #f4f6f9; 
-}
-
-.container-fluid, .content { 
-  max-width: 1440px; 
-  margin: auto; 
-}
+body { margin: 0; background-color: #f4f6f9; }
+.container-fluid, .content { max-width: 1440px; margin: auto; }
 
 .card-header[data-bs-toggle="collapse"]:hover {
   background-color: #146c43 !important;
   transition: background-color 0.2s ease-in-out;
 }
 
-/* --- USTAWIENIA DLA SMARTFONÓW --- */
+/* SMARTFONY */
 #collapseLeagues api-sports-widget, 
 #games-list api-sports-widget { 
   max-height: 55vh; 
   overflow-y: auto; 
 }
 
-/* --- USTAWIENIA DLA DESKTOPÓW (Ekrany szersze niż 768px) --- */
+/* DESKTOPY */
 @media (min-width: 768px) {
-  
-  /* Przyklejanie elementów */
   #game-content, #leagues-card { 
     position: sticky; 
     top: 80px; 
     overflow-y: auto; 
   }
 
-  /* Zwiększamy wysokość listy meczów - teraz ma więcej miejsca po usunięciu tabeli */
-  #games-list api-sports-widget { 
-    max-height: calc(100vh - 150px); 
-  }
-
+  #games-list api-sports-widget, 
   #collapseLeagues api-sports-widget { 
     max-height: calc(100vh - 150px); 
   }
 
-  /* Sekcja "Informacje o drużynie" */
   #team-content api-sports-widget { 
-    max-height: 40vh; /* Nieco mniej, żeby "Szczegóły meczu" zawsze były widoczne pod spodem */
+    max-height: 40vh; 
     overflow-y: auto;
   }
 }
