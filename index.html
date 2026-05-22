@@ -9,46 +9,67 @@
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body class="bg-dark text-light">
-  <nav class="navbar navbar-expand-lg bg-dark shadow-sm sticky-top border-bottom border-success">
+  <nav class="navbar navbar-expand-lg bg-dark border-bottom border-success sticky-top">
     <div class="container-fluid">
-      <a class="navbar-brand fw-bold text-success" href="/">GREEN BEANS SCORE</a>
-      <a href="https://www.siepomaga.pl/" target="_blank" class="btn btn-danger fw-bold">POMAGAMY !!</a>
+      <a class="navbar-brand fw-bold text-success fs-4" href="/">GREEN BEANS SCORE</a>
+      
+      <div class="d-flex gap-2">
+        <button class="btn btn-outline-success active" id="tab-today">Dzisiaj</button>
+        <button class="btn btn-outline-success" id="tab-predictions">Predykcje</button>
+        <button class="btn btn-outline-success" id="tab-standings">Tabele</button>
+      </div>
+
+      <a href="https://www.siepomaga.pl/" target="_blank" class="btn btn-danger fw-bold px-4">POMAGAMY !!</a>
     </div>
   </nav>
 
   <div class="container-fluid content p-3">
     <div class="row g-3">
-      <!-- Lewa -->
+
+      <!-- LEWA KOLUMNA -->
       <div class="col-lg-3">
         <div class="card bg-dark border-success mb-3">
-          <div class="card-header bg-success">Wybierz Ligę</div>
+          <div class="card-header bg-success fw-bold">Ligi</div>
           <div class="card-body p-0"><api-sports-widget data-type="leagues"></api-sports-widget></div>
+        </div>
+
+        <div class="card bg-dark border-success">
+          <div class="card-header bg-success fw-bold">Tabela</div>
+          <div class="card-body p-0"><api-sports-widget data-type="standings"></api-sports-widget></div>
         </div>
       </div>
 
-      <!-- Główna -->
+      <!-- GŁÓWNA KOLUMNA -->
       <div class="col-lg-6">
-        <div class="card bg-dark border-success mb-4">
-          <div class="card-header bg-success">Dzisiejsze Mecze</div>
-          <div class="card-body p-0">
-            <div id="games-list"><api-sports-widget data-type="games"></api-sports-widget></div>
+        <div id="main-content">
+          <!-- Dzisiaj / Predykcje / Tabele będą podmieniane przez JS -->
+          <div class="card bg-dark border-success">
+            <div class="card-header bg-success fw-bold" id="main-header">Dzisiejsze Mecze</div>
+            <div class="card-body p-0">
+              <div id="games-list"><api-sports-widget data-type="games"></api-sports-widget></div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Prawa - Predykcje -->
+      <!-- PRAWA KOLUMNA -->
       <div class="col-lg-3">
+        <div class="card bg-dark border-success mb-3">
+          <div class="card-header bg-success fw-bold">H2H</div>
+          <div class="card-body p-0"><api-sports-widget data-type="h2h"></api-sports-widget></div>
+        </div>
+
         <div class="card bg-dark border-success">
-          <div class="card-header bg-success">🔥 Najlepsze Predykcje</div>
-          <div class="card-body" id="value-bets">
-            <p class="text-center text-muted">Ładowanie predykcji...</p>
+          <div class="card-header bg-success fw-bold">🔥 Value Bets / Najlepsze Typy</div>
+          <div class="card-body p-0" id="value-bets">
+            <p class="text-center text-muted py-5">Ładowanie predykcji...</p>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Modal -->
+  <!-- MODAL -->
   <div class="modal fade" id="matchModal" tabindex="-1">
     <div class="modal-dialog modal-xl">
       <div class="modal-content bg-dark text-light border-success">
@@ -61,6 +82,7 @@
     </div>
   </div>
 
+  <!-- CONFIG WIDGET -->
   <api-sports-widget 
     data-type="config" 
     data-sport="football" 
