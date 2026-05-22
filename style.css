@@ -1,15 +1,9 @@
 body { 
   margin: 0; 
   background-color: #0d1117; 
-  color: #e6edf3;
 }
 
-.container-fluid, .content { 
-  max-width: 1440px; 
-  margin: auto; 
-}
-
-.card {
+.card, .modal-content {
   background-color: #161b22 !important;
   border-color: #30363d !important;
 }
@@ -20,26 +14,12 @@ body {
 
 .card-header[data-bs-toggle="collapse"]:hover {
   background-color: #2ea043 !important;
-  transition: background-color 0.2s ease-in-out;
 }
 
-/* Modal API-Sports */
 .api-sports-modal {
   z-index: 2000 !important;
 }
 
-/* SMARTFONY */
 @media (max-width: 767px) {
-  #games-list api-sports-widget { 
-    max-height: 70vh; 
-    overflow-y: auto; 
-  }
-}
-
-/* DESKTOP */
-@media (min-width: 768px) {
-  #games-list api-sports-widget { 
-    max-height: calc(100vh - 150px); 
-    overflow-y: auto; 
-  }
+  #games-list api-sports-widget { max-height: 70vh; overflow-y: auto; }
 }
