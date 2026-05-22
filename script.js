@@ -13,7 +13,7 @@ async function loadValueBets() {
     const fixturesData = await fixturesRes.json();
     const fixtures = fixturesData.response || [];
 
-    const predPromises = fixtures.slice(0, 10).map(f => 
+    const predPromises = fixtures.slice(0, 15).map(f => 
       fetch(`${BASE_URL}/predictions?fixture=${f.fixture.id}`, {
         headers: { "x-rapidapi-key": API_KEY, "x-rapidapi-host": "v3.football.api-sports.io" }
       }).then(r => r.json())
@@ -22,36 +22,66 @@ async function loadValueBets() {
     const predictions = await Promise.all(predPromises);
 
     let html = '<div class="list-group list-group-flush">';
+
+    let hasGoodPrediction = false;
+
     predictions.forEach((predData, i) => {
       const fixture = fixtures[i];
       if (!predData.response?.[0]) return;
+
       const p = predData.response[0].predictions;
       const teams = fixture.teams;
 
-      let tip = "Remis";
-      let prob = parseFloat(p.draw) || 0;
-      if (parseFloat(p.home) > prob) { tip = `${teams.home.name} wygra`; prob = parseFloat(p.home); }
-      if (parseFloat(p.away) > prob) { tip = `${teams.away.name} wygra`; prob = parseFloat(p.away); }
+      const home = parseFloat(p.home) || 0;
+      const draw = parseFloat(p.draw) || 0;
+      const away = parseFloat(p.away) || 0;
 
-      html += `
-        <div class="list-group-item py-3">
-          <div class="d-flex justify-content-between align-items-center">
-            <div><strong>${teams.home.name}</strong> – <strong>${teams.away.name}</strong></div>
-            <span class="badge bg-success">${prob.toFixed(0)}%</span>
-          </div>
-          <div class="text-success fw-bold mt-1">${tip}</div>
-          ${p.advice ? `<small class="text-muted">${p.advice}</small>` : ''}
-        </div>`;
+      // Najlepszy typ
+      let tip = "Remis";
+      let prob = draw;
+      let colorClass = "text-warning";
+
+      if (home > draw && home > away) {
+        tip = `${teams.home.name} wygra`;
+        prob = home;
+        colorClass = "text-success";
+      } else if (away > draw && away > home) {
+        tip = `${teams.away.name} wygra`;
+        prob = away;
+        colorClass = "text-success";
+      }
+
+      // Pokazujemy tylko mecze z sensownym prawdopodobieństwem
+      if (prob >= 45) {
+        hasGoodPrediction = true;
+        html += `
+          <div class="list-group-item py-3">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="small"><strong>${teams.home.name}</strong> – <strong>${teams.away.name}</strong></div>
+              <span class="badge bg-success">${prob.toFixed(0)}%</span>
+            </div>
+            <div class="${colorClass} fw-bold">${tip}</div>
+            <small class="text-muted">Dom ${home}% | Remis ${draw}% | Wyjazd ${away}%</small>
+            ${p.advice ? `<div class="text-info small mt-1">${p.advice}</div>` : ''}
+          </div>`;
+      }
     });
+
     html += '</div>';
-    container.innerHTML = html || '<p class="text-center text-muted py-4">Brak predykcji na dzisiaj</p>';
+
+    if (!hasGoodPrediction) {
+      container.innerHTML = `<p class="text-center text-muted py-4">Brak pewnych typów na dzisiaj.<br>API nie ma jeszcze dobrych predykcji dla tych meczów.</p>`;
+    } else {
+      container.innerHTML = html;
+    }
+
   } catch (e) {
     console.error(e);
     container.innerHTML = `<div class="alert alert-danger m-3">Błąd ładowania predykcji</div>`;
   }
 }
 
-// Kliknięcie w mecz → modal z oddsami + predykcją
+// Modal z oddsami i predykcją
 document.addEventListener('click', (e) => {
   const row = e.target.closest('.api-sports-game-row, [data-fixture], [data-id]');
   if (row) {
@@ -61,6 +91,7 @@ document.addEventListener('click', (e) => {
 });
 
 async function loadMatchModal(fixtureId) {
+  // (ten sam kod co wcześniej – nie zmieniamy, bo działa)
   const modal = new bootstrap.Modal(document.getElementById('matchModal'));
   const body = document.getElementById('modalBody');
   body.innerHTML = `<div class="text-center py-5"><div class="spinner-border text-success"></div><p>Ładowanie szczegółów i kursów...</p></div>`;
@@ -86,8 +117,8 @@ async function loadMatchModal(fixtureId) {
         <p class="text-center text-muted">${new Date(match.date).toLocaleString('pl-PL')}</p>
         <hr>
         <h5>Kursy bukmacherskie (1X2)</h5>
-        <div id="odds-container"></div>
-        <h5 class="mt-4">Predykcja API-Sports</h5>
+        <div id="odds-container" class="mb-4"></div>
+        <h5>Predykcja API-Sports</h5>
         <div id="pred-container"></div>
       </div>`;
 
@@ -110,7 +141,6 @@ async function loadMatchModal(fixtureId) {
 
     document.getElementById('odds-container').innerHTML = oddsHTML;
 
-    // Predykcja
     const p = predData.response?.[0]?.predictions;
     if (p) {
       document.getElementById('pred-container').innerHTML = `
@@ -128,7 +158,7 @@ async function loadMatchModal(fixtureId) {
 document.addEventListener('DOMContentLoaded', () => {
   loadValueBets();
 
-  // Proste przełączanie zakładek (można później rozbudować)
+  // Przełączanie zakładek
   document.querySelectorAll('#tab-today, #tab-predictions, #tab-standings').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('#tab-today, #tab-predictions, #tab-standings').forEach(b => b.classList.remove('active'));
