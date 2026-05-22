@@ -23,8 +23,8 @@
       
       <div class="col-12 col-md-3 mb-3">
         <div id="leagues-card" class="card bg-white shadow-sm border-0">
-          <div class="card-header bg-success text-white text-center fw-bold" data-bs-toggle="collapse" data-bs-target="#collapseLeagues" style="cursor: pointer;" title="Kliknij, aby zwinąć/rozwinąć">
-            Wybierz Ligę (Zwiń/Rozwiń) ⬇
+          <div class="card-header bg-success text-white text-center fw-bold" data-bs-toggle="collapse" data-bs-target="#collapseLeagues" style="cursor: pointer;">
+            Wybierz Ligę ⬇
           </div>
           <div id="collapseLeagues" class="collapse show">
             <div class="card-body p-0">
@@ -48,13 +48,6 @@
       <div class="col-12 col-md-4 mb-3">
         
         <div class="card bg-white shadow-sm border-0 mb-3">
-          <div class="card-header bg-light text-dark text-center fw-bold border-bottom">Tabela Ligowa</div>
-          <div class="card-body p-0">
-            <div id="standings-content"></div>
-          </div>
-        </div>
-        
-        <div class="card bg-white shadow-sm border-0 mb-3">
           <div class="card-header bg-light text-dark text-center fw-bold border-bottom">Informacje o drużynie</div>
           <div class="card-body p-0">
             <div id="team-content"></div>
@@ -62,7 +55,7 @@
         </div>
 
         <div id="game-content" class="card bg-white shadow-sm border-0">
-          <div class="card-header bg-light text-dark text-center fw-bold border-bottom">Szczegóły meczu</div>
+          <div class="card-header bg-light text-dark text-center fw-bold border-bottom">Szczegóły meczu i Kursy</div>
           <div class="card-body p-0">
              <api-sports-widget data-type="game"></api-sports-widget>
           </div>
@@ -83,18 +76,19 @@
     data-refresh="20" 
     data-favorite="true" 
     data-player-trophies="true" 
-    data-standings="true" 
     data-player-injuries="true" 
     data-team-squad="true" 
     data-team-statistics="true" 
     data-player-statistics="true" 
+    data-odds="true"
+    data-odds-type="1x2"
+    data-show-predictions="true"
     data-tab="games" 
     data-game-tab="statistics" 
     data-target-player="modal" 
     data-target-league="#games-list" 
     data-target-team="#team-content" 
-    data-target-game="#game-content .card-body" 
-    data-target-standings="#standings-content">
+    data-target-game="#game-content .card-body">
   </api-sports-widget>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
