@@ -7,84 +7,79 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
   <script type="module" crossorigin src="https://widgets.api-sports.io/3.1.0/widgets.js"></script>
   <style>
-    body { background-color: #0d0e12; font-family: 'Segoe UI', Roboto, sans-serif; }
-    .container-fluid { max-width: 1600px; }
-    .card { border: none; border-radius: 12px; overflow: hidden; background: #1a1b22 !important; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
-    .card-header { text-transform: uppercase; font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; border: none; padding: 12px; }
+    body { background-color: #0d0e12; font-family: 'Inter', sans-serif; color: #e0e0e0; }
+    .card { border: none; border-radius: 12px; background: #16171d !important; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px; }
+    .card-header { text-transform: uppercase; font-size: 0.7rem; font-weight: 900; letter-spacing: 1.5px; padding: 12px 20px; border: none; }
     
-    /* Custom Prediction Bar */
-    .prob-container { display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: #333; margin: 15px 0; }
-    .prob-home { background: #007bff; transition: width 0.5s; }
-    .prob-draw { background: #6c757d; transition: width 0.5s; }
-    .prob-away { background: #dc3545; transition: width 0.5s; }
+    /* Tiger Comparison Bars */
+    .comparison-row { margin-bottom: 12px; }
+    .comparison-label { font-size: 11px; text-transform: uppercase; color: #888; display: flex; justify-content: space-between; margin-bottom: 4px; }
+    .comp-bar-container { height: 6px; display: flex; background: #2d2e37; border-radius: 10px; overflow: hidden; }
+    .comp-bar-home { background: #007bff; }
+    .comp-bar-away { background: #dc3545; }
+
+    /* Prediction Badges */
+    .stat-tile { background: #1f2029; border-radius: 10px; padding: 12px; text-align: center; border: 1px solid #2d2e37; }
+    .stat-tile strong { display: block; font-size: 1.1rem; margin-top: 5px; }
     
-    .stat-badge { background: #25262e; border-radius: 8px; padding: 10px; text-align: center; flex: 1; margin: 0 4px; border: 1px solid #333; }
-    .stat-label { font-size: 10px; color: #888; display: block; text-transform: uppercase; margin-bottom: 4px; }
-    .stat-value { font-size: 14px; font-weight: bold; color: #fff; }
-    
-    .h2h-item { font-size: 0.85rem; padding: 8px !important; border-color: #2d2e37 !important; }
-    .h2h-date { font-size: 0.7rem; color: #666; }
-    
-    #leagues-list, #game-content { position: sticky; top: 20px; max-height: 90vh; overflow-y: auto; }
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+    #games-list, #game-content, #team-details { max-height: 85vh; overflow-y: auto; sticky; top: 20px; }
+    .nav-tiger { border-bottom: 2px solid #198754; margin-bottom: 20px; background: #16171d; }
   </style>
 </head>
 <body>
 
-  <nav class="navbar navbar-dark bg-dark mb-4 border-bottom border-success">
+  <nav class="navbar navbar-dark nav-tiger">
     <div class="container-fluid">
-      <span class="navbar-brand fw-bold text-success">Green Beans Score <span class="text-white">v3.0</span></span>
+      <span class="navbar-brand fw-bold text-success">Green Beans Score<span class="text-white">v4.0 DEEP DATA</span></span>
     </div>
   </nav>
 
   <div class="container-fluid">
     <div class="row">
       
-      <div class="col-12 col-lg-3 mb-4">
-        <div id="leagues-list" class="card">
-          <div class="card-header bg-secondary text-white">🏆 Rozgrywki</div>
+      <div class="col-lg-3">
+        <div class="card">
+          <div class="card-header bg-secondary">🏆 Ligi</div>
           <api-sports-widget data-type="leagues"></api-sports-widget>
         </div>
-      </div>
-      
-      <div class="col-12 col-lg-5 mb-4">
-        <div class="card mb-4">
-          <div class="card-header bg-dark text-white text-center">📅 Terminarz</div>
-          <div id="games-list">
-            <api-sports-widget data-type="games"></api-sports-widget>
-          </div>
-        </div>
         <div class="card">
-          <div class="card-header bg-danger text-white text-center">🔴 Live</div>
-          <api-sports-widget data-type="livescores"></api-sports-widget>
+          <div class="card-header bg-dark">📅 Terminarz</div>
+          <div id="games-list"><api-sports-widget data-type="games"></api-sports-widget></div>
         </div>
       </div>
       
-      <div class="col-12 col-lg-4">
-        
-        <div class="card mb-4">
-          <div class="card-header bg-primary text-white">📊 Analiza Spotkania</div>
-          <div id="custom-h2h-panel" class="card-body">
-            <p class="text-muted text-center m-0">Wybierz mecz z listy</p>
+      <div class="col-lg-5">
+        <div class="card border-start border-warning border-4">
+          <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
+            <span>🔮 ANALIZA TYGRYSA (AI COMPARISON)</span>
+            <span id="match-referee" class="badge bg-dark text-info">Sędzia: ?</span>
+          </div>
+          <div id="tiger-analysis" class="card-body">
+            <p class="text-center text-muted">Wybierz mecz, aby uruchomić silnik analizy...</p>
           </div>
         </div>
 
-        <div class="card mb-4 border-start border-warning border-4">
-          <div class="card-header bg-warning text-dark">🔮 Typy i Szanse AI</div>
-          <div id="predictions-content" class="card-body">
-             <p class="text-muted text-center m-0">Czekam na wybór meczu...</p>
-          </div>
-        </div>
-
-        <div id="game-content" class="card">
-          <div class="card-header bg-success text-white">📝 Statystyki i Rożne</div>
-          <div class="card-body p-0">
+        <div class="card">
+          <div class="card-header bg-success text-white">📊 Statystyki Meczowe i Rożne</div>
+          <div id="game-content" class="card-body p-0">
              <api-sports-widget data-type="game"></api-sports-widget>
           </div>
         </div>
-
       </div>
+      
+      <div class="col-lg-4">
+        <div id="team-details" class="card">
+          <div class="card-header bg-info text-dark">🛡️ Informacje o Klubie</div>
+          <div id="team-content" class="card-body p-0">
+             <p class="text-center p-4 text-muted">Kliknij herb drużyny w statystykach, aby zobaczyć skład i formę</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header bg-primary">🤝 Ostatnie H2H</div>
+          <div id="h2h-list" class="card-body p-0"></div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -95,95 +90,98 @@
     data-lang="pl" 
     data-theme="grey" 
     data-show-logos="true" 
-    data-tab="games" 
     data-target-league="#games-list" 
-    data-target-game="#game-content .card-body">
+    data-target-game="#game-content" 
+    data-target-team="#team-content">
   </api-sports-widget>
 
   <script>
     const API_KEY = "f3c7ed02b7e08d0364bd2eb4f56ab2a5";
 
     document.addEventListener("DOMContentLoaded", function() {
-      const gameContainer = document.querySelector('#game-content .card-body');
-      let lastId = null;
+      const gameTarget = document.querySelector('#game-content');
+      let lastGid = null;
 
-      const observer = new MutationObserver(() => {
-        const widget = gameContainer.querySelector('api-sports-widget');
-        if (widget) {
-          const gid = widget.getAttribute('data-game-id');
-          if (gid && gid !== lastId) {
-            lastId = gid;
-            loadTigerAnalysis(gid);
+      const obs = new MutationObserver(() => {
+        const w = gameTarget.querySelector('api-sports-widget');
+        if(w) {
+          const gid = w.getAttribute('data-game-id');
+          if(gid && gid !== lastGid) {
+            lastGid = gid;
+            runTigerEngine(gid);
           }
         }
       });
-      observer.observe(gameContainer, { childList: true, subtree: true, attributes: true });
+      obs.observe(gameTarget, { childList: true, subtree: true });
 
-      async function loadTigerAnalysis(id) {
-        const h2hPanel = document.getElementById('custom-h2h-panel');
-        const predBox = document.getElementById('predictions-content');
+      async function runTigerEngine(id) {
+        const analysisBox = document.getElementById('tiger-analysis');
+        const h2hBox = document.getElementById('h2h-list');
         
-        h2hPanel.innerHTML = '<div class="text-center py-3"><div class="spinner-border spinner-border-sm text-primary"></div></div>';
-        predBox.innerHTML = '<div class="text-center py-3"><div class="spinner-border spinner-border-sm text-warning"></div></div>';
-
         try {
-          // 1. Dane podstawowe i H2H
-          const resFix = await fetch(`https://v3.football.api-sports.io/fixtures?id=${id}`, { headers: {"x-apisports-key": API_KEY} });
-          const dataFix = await resFix.json();
-          const fix = dataFix.response[0];
+          const [resPred, resFix] = await Promise.all([
+            fetch(`https://v3.football.api-sports.io/predictions?fixture=${id}`, { headers: {"x-apisports-key": API_KEY} }),
+            fetch(`https://v3.football.api-sports.io/fixtures?id=${id}`, { headers: {"x-apisports-key": API_KEY} })
+          ]);
+
+          const pData = await resPred.json();
+          const fData = await resFix.json();
           
-          const resH2h = await fetch(`https://v3.football.api-sports.io/fixtures/headtohead?h2h=${fix.teams.home.id}-${fix.teams.away.id}&last=5`, { headers: {"x-apisports-key": API_KEY} });
-          const dataH2h = await resH2h.json();
+          const p = pData.response[0];
+          const f = fData.response[0];
 
-          // Render H2H
-          let h2hHtml = `<div class="mb-3 text-center text-info fw-bold">👨‍⚖️ Sędzia: ${fix.fixture.referee || 'Nieznany'}</div>`;
-          h2hHtml += `<div class="list-group list-group-flush">`;
-          dataH2h.response.forEach(m => {
-            h2hHtml += `
-              <div class="list-group-item h2h-item bg-transparent text-white border-secondary d-flex justify-content-between align-items-center">
-                <span class="h2h-date">${new Date(m.fixture.date).toLocaleDateString()}</span>
-                <span>${m.teams.home.name.substring(0,3)} <strong>${m.goals.home}:${m.goals.away}</strong> ${m.teams.away.name.substring(0,3)}</span>
-              </div>`;
-          });
-          h2hHtml += `</div>`;
-          h2hPanel.innerHTML = h2hHtml;
+          // Aktualizacja Sędziego
+          document.getElementById('match-referee').innerText = `Sędzia: ${f.fixture.referee || 'Nieznany'}`;
 
-          // 2. Predykcje Tygrysa
-          const resPred = await fetch(`https://v3.football.api-sports.io/predictions?fixture=${id}`, { headers: {"x-apisports-key": API_KEY} });
-          const dataPred = await resPred.json();
-          const p = dataPred.response[0];
-
-          if (p) {
-            const btts = p.predictions.btts ? "TAK" : "NIE";
-            const corners = p.predictions.corners || "Brak";
-            
-            predBox.innerHTML = `
-              <div class="text-center mb-2">
-                <span class="badge bg-dark border border-warning text-warning p-2 w-100 mb-3" style="font-size: 0.9rem;">🎯 TYP: ${p.predictions.advice}</span>
-              </div>
-              
-              <div class="d-flex justify-content-between mb-1" style="font-size: 0.75rem; font-weight: bold;">
-                <span class="text-primary">1 (${p.predictions.percent.home})</span>
-                <span class="text-muted">X (${p.predictions.percent.draw})</span>
-                <span class="text-danger">2 (${p.predictions.percent.away})</span>
-              </div>
-              <div class="prob-container">
-                <div class="prob-home" style="width: ${p.predictions.percent.home}"></div>
-                <div class="prob-draw" style="width: ${p.predictions.percent.draw}"></div>
-                <div class="prob-away" style="width: ${p.predictions.percent.away}"></div>
+          if(p) {
+            const comp = p.comparison;
+            analysisBox.innerHTML = `
+              <div class="alert alert-dark border-warning mb-4">
+                <small class="text-warning fw-bold">SUGESTIA:</small> <br><strong>${p.predictions.advice}</strong>
               </div>
 
-              <div class="d-flex mt-3">
-                <div class="stat-badge"><span class="stat-label">BTTS</span><span class="stat-value text-warning">${btts}</span></div>
-                <div class="stat-badge"><span class="stat-label">U/O 2.5</span><span class="stat-value">${p.predictions.under_over || '-'}</span></div>
-                <div class="stat-badge"><span class="stat-label">Rożne</span><span class="stat-value text-info">${corners}</span></div>
+              <div class="mb-4">
+                ${renderBar("FORMA", comp.form.home, comp.form.away)}
+                ${renderBar("ATAK", comp.att.home, comp.att.away)}
+                ${renderBar("OBRONA", comp.def.home, comp.def.away)}
+                ${renderBar("H2H SZANSE", comp.h2h.home, comp.h2h.away)}
+              </div>
+
+              <div class="row g-2">
+                <div class="col-4"><div class="stat-tile"><small>BTTS</small><strong class="${p.predictions.btts ? 'text-success':'text-danger'}">${p.predictions.btts ? 'TAK':'NIE'}</strong></div></div>
+                <div class="col-4"><div class="stat-tile"><small>U/O 2.5</small><strong>${p.predictions.under_over || '-'}</strong></div></div>
+                <div class="col-4"><div class="stat-tile"><small>ROŻNE</small><strong class="text-info">${p.predictions.corners || 'Brak'}</strong></div></div>
               </div>
             `;
           }
-        } catch (e) {
-          console.error(e);
-          predBox.innerHTML = "Błąd pobierania danych.";
+
+          // H2H List
+          const resH2H = await fetch(`https://v3.football.api-sports.io/fixtures/headtohead?h2h=${f.teams.home.id}-${f.teams.away.id}&last=5`, { headers: {"x-apisports-key": API_KEY} });
+          const h2hData = await resH2H.json();
+          h2hBox.innerHTML = h2hData.response.map(m => `
+            <div class="p-2 border-bottom border-dark d-flex justify-content-between align-items-center" style="font-size:0.8rem">
+              <span class="text-muted">${new Date(m.fixture.date).toLocaleDateString()}</span>
+              <span>${m.teams.home.name} <strong>${m.goals.home}:${m.goals.away}</strong> ${m.teams.away.name}</span>
+            </div>
+          `).join('');
+
+        } catch(e) {
+          analysisBox.innerHTML = "Błąd ładowania danych .";
         }
+      }
+
+      function renderBar(label, home, away) {
+        const h = parseFloat(home);
+        const a = parseFloat(away);
+        return `
+          <div class="comparison-row">
+            <div class="comparison-label"><span>${home}</span> <span>${label}</span> <span>${away}</span></div>
+            <div class="comp-bar-container">
+              <div class="comp-bar-home" style="width:${h}%"></div>
+              <div class="comp-bar-away" style="width:${a}%"></div>
+            </div>
+          </div>
+        `;
       }
     });
   </script>
