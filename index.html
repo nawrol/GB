@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GB SCORE - Centrum Analityczne</title>
+    <title>GB SCORE - Terminal Analityczny Ultra</title>
     <script type="module" src="https://widgets.api-sports.io/3.1.0/widgets.js"></script>
     
     <style>
         :root { --primary-color: #00d26a; --bg-color: #0d1117; --panel-bg: #161b22; --text-color: #c9d1d9; --border-color: #30363d; }
         body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 20px; }
         header { text-align: center; margin-bottom: 20px; }
-        header h1 { color: var(--primary-color); font-size: 2.5rem; margin: 0; text-transform: uppercase; letter-spacing: 2px; }
+        header h1 { color: var(--primary-color); font-size: 2.5rem; margin: 0; letter-spacing: 2px; }
         .controls { text-align: center; margin-bottom: 30px; background: var(--panel-bg); padding: 20px; border-radius: 8px; border: 1px solid var(--border-color); max-width: 1000px; margin: 0 auto 30px auto; }
-        input[type="date"] { background: #0d1117; color: white; border: 1px solid var(--primary-color); padding: 10px; border-radius: 5px; cursor: pointer; font-size: 1rem; }
+        select, input[type="date"] { background: #0d1117; color: white; border: 1px solid var(--primary-color); padding: 10px; border-radius: 5px; cursor: pointer; margin: 0 10px; }
         .container { max-width: 1000px; margin: 0 auto; }
         details { background-color: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; overflow: hidden; }
-        summary { padding: 15px 20px; cursor: pointer; display: flex; align-items: center; gap: 15px; font-weight: 600; font-size: 1.1rem; background: #1c2128; }
+        summary { padding: 15px 20px; cursor: pointer; display: flex; align-items: center; gap: 15px; font-weight: 600; background: #1c2128; }
         .flag { font-size: 1.5rem; }
         .leagues-wrapper { padding: 15px; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 15px; }
     </style>
@@ -25,11 +25,19 @@
     <header><h1>GB SCORE</h1></header>
 
     <div class="controls">
-        <label>Wybierz datę analizy: </label>
-        <input type="date" id="globalDate" value="2026-05-22">
+        <label>Wybierz datę: </label>
+        <select id="dateSelect">
+            <option value="2026-05-22">Dzisiaj (22.05)</option>
+            <option value="2026-05-21">Wczoraj (21.05)</option>
+            <option value="2026-05-20">20.05</option>
+            <option value="2026-05-19">19.05</option>
+            <option value="2026-05-18">18.05</option>
+            <option value="custom">Inna data (wpisz ręcznie)</option>
+        </select>
+        <input type="date" id="customDate" style="display:none;">
     </div>
 
-    <api-sports-widget data-type="config" data-key="f3c7ed02b7e08d0364bd2eb4f56ab2a5" data-sport="football" data-lang="pl" data-theme="dark" data-odds="true"></api-sports-widget>
+    <api-sports-widget data-type="config" data-key="f3c7ed02b7e08d0364bd2eb4f56ab2a5" data-sport="football" data-lang="pl" data-theme="dark" data-odds="true" data-show-stats="true" data-show-events="true" data-show-lineups="true" data-show-predictions="true"></api-sports-widget>
 
     <div class="container">
         <details><summary><span class="flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span> Anglia</summary><div class="leagues-wrapper" data-leagues="39,40,41"></div></details>
@@ -52,7 +60,6 @@
         <details><summary><span class="flag">🇳🇴</span> Norwegia</summary><div class="leagues-wrapper" data-leagues="103,104,105"></div></details>
         <details><summary><span class="flag">🇸🇪</span> Szwecja</summary><div class="leagues-wrapper" data-leagues="113,114,115"></div></details>
         <details><summary><span class="flag">🇨🇿</span> Czechy</summary><div class="leagues-wrapper" data-leagues="245,246,247"></div></details>
-
         <details><summary><span class="flag">🇹🇷</span> Turcja</summary><div class="leagues-wrapper" data-leagues="203,204"></div></details>
         <details><summary><span class="flag">🏴󠁧󠁢󠁳󠁣󠁴󠁿</span> Szkocja</summary><div class="leagues-wrapper" data-leagues="179,180"></div></details>
         <details><summary><span class="flag">🇧🇪</span> Belgia</summary><div class="leagues-wrapper" data-leagues="144,145"></div></details>
@@ -67,7 +74,15 @@
 
     <script>
         function updateWidgets() {
-            const date = document.getElementById('globalDate').value;
+            let date = document.getElementById('dateSelect').value;
+            if (date === 'custom') {
+                date = document.getElementById('customDate').value;
+                document.getElementById('customDate').style.display = 'inline-block';
+            } else {
+                document.getElementById('customDate').style.display = 'none';
+            }
+            if(!date) return;
+
             document.querySelectorAll('details[open]').forEach(detail => {
                 const wrapper = detail.querySelector('.leagues-wrapper');
                 const leagues = wrapper.dataset.leagues.split(',');
@@ -78,11 +93,13 @@
                     w.setAttribute('data-date', date);
                     w.setAttribute('data-league', id.trim());
                     w.setAttribute('data-target-game', 'modal');
+                    w.setAttribute('data-target-team', 'modal');
                     wrapper.appendChild(w);
                 });
             });
         }
-        document.getElementById('globalDate').addEventListener('change', updateWidgets);
+        document.getElementById('dateSelect').addEventListener('change', updateWidgets);
+        document.getElementById('customDate').addEventListener('change', updateWidgets);
         document.querySelectorAll('details').forEach(d => d.addEventListener('toggle', updateWidgets));
     </script>
 </body>
