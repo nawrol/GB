@@ -3,77 +3,52 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Green Beans Score • Predykcje</title>
+  <title>Green Beans Score</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
   <script type="module" crossorigin src="https://widgets.api-sports.io/3.1.0/widgets.js"></script>
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body class="bg-dark text-light">
-  <nav class="navbar navbar-expand-lg bg-dark border-bottom border-success sticky-top">
-    <div class="container-fluid">
-      <a class="navbar-brand fw-bold text-success fs-4" href="/">GREEN BEANS SCORE</a>
-      
-      <div class="d-flex gap-2">
-        <button class="btn btn-outline-success active" id="tab-today">Dzisiaj</button>
-        <button class="btn btn-outline-success" id="tab-predictions">Predykcje</button>
-        <button class="btn btn-outline-success" id="tab-standings">Tabele</button>
-      </div>
-
+  <nav class="navbar navbar-expand-lg bg-dark shadow-sm sticky-top border-bottom border-success">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+      <a class="navbar-brand fw-bold text-success" href="/">GREEN BEANS SCORE</a>
       <a href="https://www.siepomaga.pl/" target="_blank" class="btn btn-danger fw-bold px-4">POMAGAMY !!</a>
     </div>
   </nav>
 
-  <div class="container-fluid content p-3">
-    <div class="row g-3">
-
-      <!-- Lewa kolumna - Ligi + Tabela -->
-      <div class="col-lg-3">
-        <div class="card bg-dark border-success mb-3">
-          <div class="card-header bg-success fw-bold">Ligi</div>
-          <div class="card-body p-0"><api-sports-widget data-type="leagues"></api-sports-widget></div>
-        </div>
+  <div class="content p-3">
+    <div class="row">
+      <div class="col-12 col-md-3 mb-3">
         <div class="card bg-dark border-success">
-          <div class="card-header bg-success fw-bold">Tabela</div>
-          <div class="card-body p-0"><api-sports-widget data-type="standings"></api-sports-widget></div>
-        </div>
-      </div>
-
-      <!-- Główna kolumna -->
-      <div class="col-lg-6">
-        <div class="card bg-dark border-success">
-          <div class="card-header bg-success fw-bold" id="main-header">Dzisiejsze Mecze</div>
-          <div class="card-body p-0" id="games-list">
-            <api-sports-widget data-type="games"></api-sports-widget>
+          <div class="card-header bg-success text-white text-center fw-bold" data-bs-toggle="collapse" data-bs-target="#collapseLeagues">Wybierz Ligę ⬇</div>
+          <div id="collapseLeagues" class="collapse show">
+            <div class="card-body p-0"><api-sports-widget data-type="leagues"></api-sports-widget></div>
           </div>
         </div>
       </div>
-
-      <!-- Prawa kolumna -->
-      <div class="col-lg-3">
-        <div class="card bg-dark border-success mb-3">
-          <div class="card-header bg-success fw-bold">H2H</div>
-          <div class="card-body p-0"><api-sports-widget data-type="h2h"></api-sports-widget></div>
-        </div>
-
+      
+      <div class="col-12 col-md-9 mb-3">
+        <button class="btn btn-sm btn-outline-success w-100 mb-2" onclick="location.reload()">🔄 Odśwież</button>
+        
         <div class="card bg-dark border-success">
-          <div class="card-header bg-success fw-bold">🔥 Value Bets / Najlepsze Typy</div>
-          <div class="card-body p-0" id="value-bets">
-            <p class="text-center text-muted py-5">Ładowanie predykcji...</p>
+          <div class="card-header bg-success text-white text-center fw-bold">Dzisiejsze Mecze</div>
+          <div class="card-body p-0">
+            <div id="games-list"><api-sports-widget data-type="games"></api-sports-widget></div>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="matchModal" tabindex="-1">
+  <!-- Modal (używany zarówno przez widget jak i przez nas) -->
+  <div class="modal fade" id="matchModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content bg-dark text-light border-success">
         <div class="modal-header border-success">
           <h5 class="modal-title" id="modalTitle">Szczegóły meczu</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-body p-0" id="modalBody"></div>
       </div>
     </div>
   </div>
@@ -86,16 +61,17 @@
     data-lang="pl" 
     data-theme="dark" 
     data-odds="true"
+    data-odds-type="1x2,over_under"
     data-odds-provider="all"
     data-show-predictions="true"
     data-show-logos="true" 
-    data-refresh="20" 
+    data-refresh="15" 
     data-favorite="true"
     data-player-injuries="true" 
     data-team-squad="true" 
     data-team-statistics="true" 
     data-player-statistics="true" 
-    data-target-league="#games-list"
+    data-target-league="#games-list" 
     data-target-game="modal"
     data-target-team="modal"
     data-target-player="modal">
