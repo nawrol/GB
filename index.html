@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Centrum Piłkarskie - Statystyki i Wyniki</title>
+  <title>Bukmacherski Kokpit Tygrysa</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
   <script type="module" crossorigin src="https://widgets.api-sports.io/3.1.0/widgets.js"></script>
   <link rel="stylesheet" type="text/css" href="style.css" />
@@ -12,7 +12,7 @@
 
   <nav class="header navbar navbar-expand-lg bg-body-tertiary sticky-top">
     <div class="container-fluid">
-      <a class="navbar-brand fw-bold text-success" href="#">⚽ GLOBALNE CENTRUM PIŁKARSKIE</a>
+      <a class="navbar-brand fw-bold text-success" href="#">⚽ TYGRYS ANALIZY - H2H & PROGNOZY</a>
     </div>
   </nav>
 
@@ -39,8 +39,8 @@
         </div>
 
         <div class="card text-bg-dark border-dark shadow">
-          <div class="card-header text-center fw-bold bg-danger text-white">🔴 MECZE NA ŻYWO (LIVESCORES)</div>
-          <div class="card-body p-0">
+          <div class="card-header text-center fw-bold bg-danger text-white">🔴 NA ŻYWO</div>
+          <div class="card-body p-0 text-center">
             <api-sports-widget data-type="livescores"></api-sports-widget>
           </div>
         </div>
@@ -49,19 +49,16 @@
       <div class="col-12 col-lg-4 mb-4">
         
         <div class="card text-bg-dark border-dark shadow mb-4">
-          <div class="card-header text-center fw-bold bg-primary text-white">Tabela Ligowa</div>
-          <div class="card-body p-0">
-            <div id="standings-content"></div>
+          <div class="card-header text-center fw-bold bg-primary text-white">Analiza H2H i Sędzia</div>
+          <div id="custom-h2h-panel" class="card-body p-3">
+            <p class="text-muted text-center">Wybierz mecz, aby zobaczyć H2H i sędziego</p>
           </div>
         </div>
 
         <div class="card text-bg-dark border-dark shadow mb-4">
-          <div class="card-header text-center fw-bold bg-warning text-dark">🔮 Prognozy i Analizy (Predictions)</div>
-          <div class="card-body p-0">
-            <div id="predictions-content">
-              <api-sports-widget data-type="predictions" data-game-id=""></api-sports-widget>
+          <div class="card-header text-center fw-bold bg-warning text-dark">🔮 Prognozy i Typy</div>
+          <div id="predictions-content" class="card-body p-0">
             </div>
-          </div>
         </div>
         
         <div class="card text-bg-dark border-dark shadow mb-4">
@@ -72,7 +69,7 @@
         </div>
 
         <div id="game-content" class="card text-bg-dark border-dark shadow">
-          <div class="card-header text-center fw-bold bg-success text-white">Statystyki Wybranego Meczu</div>
+          <div class="card-header text-center fw-bold bg-success text-white">Szczegóły i Statystyki (w tym Rożne)</div>
           <div class="card-body p-0">
              <api-sports-widget data-type="game"></api-sports-widget>
           </div>
@@ -85,52 +82,85 @@
   <api-sports-widget 
     data-type="config" 
     data-sport="football" 
-    data-key="f3c7ed02b7e08d0364bd2eb4f56ab2a5" 
+    data-key="TWÓJ_KLUCZ_API" 
     data-lang="pl" 
     data-theme="grey" 
-    data-show-error="false" 
-    data-show-logos="true" 
-    data-refresh="20" 
-    data-favorite="true" 
-    data-player-trophies="true" 
-    data-standings="true" 
-    data-player-injuries="true" 
-    data-team-squad="true" 
-    data-team-statistics="true" 
-    data-player-statistics="true" 
-    data-tab="games" 
-    data-game-tab="statistics" 
-    data-target-player="modal" 
+    data-favorite="true"
     data-target-league="#games-list" 
     data-target-team="#team-content" 
-    data-target-game="#game-content .card-body" 
-    data-target-standings="#standings-content">
+    data-target-game="#game-content .card-body">
   </api-sports-widget>
 
   <script>
+    const API_KEY = "TWÓJ_KLUCZ_API"; // Wklej tu klucz ponownie
+
     document.addEventListener("DOMContentLoaded", function() {
-      const gameWidget = document.querySelector('#game-content api-sports-widget');
-      const predWidget = document.querySelector('#predictions-content api-sports-widget');
+      const gameContainer = document.querySelector('#game-content .card-body');
 
-      if (gameWidget && predWidget) {
-        const observer = new MutationObserver(function(mutations) {
-          mutations.forEach(function(mutation) {
-            if (mutation.type === 'attributes' && mutation.attributeName === 'data-game-id') {
-              const gameId = gameWidget.getAttribute('data-game-id');
-              
-              if (gameId) {
-                predWidget.innerHTML = '';
-                predWidget.setAttribute('data-game-id', gameId);
-                
-                if (typeof predWidget.connectedCallback === 'function') {
-                  predWidget.connectedCallback();
-                }
-              }
-            }
+      const observer = new MutationObserver(async function() {
+        const gameWidget = gameContainer.querySelector('api-sports-widget');
+        if (!gameWidget) return;
+
+        const gameId = gameWidget.getAttribute('data-game-id');
+        if (gameId) {
+          updatePredictions(gameId);
+          fetchExtraData(gameId);
+        }
+      });
+
+      observer.observe(gameContainer, { childList: true, subtree: true });
+
+      // Funkcja naprawiająca prognozy
+      function updatePredictions(id) {
+        const predBox = document.getElementById('predictions-content');
+        predBox.innerHTML = `<api-sports-widget data-type="predictions" data-game-id="${id}"></api-sports-widget>`;
+        // Ręczne wywołanie widgetów, jeśli potrzebne
+        if (window.ApiSports) window.ApiSports.init(); 
+      }
+
+      // Funkcja pobierająca H2H i Sędziego
+      async function fetchExtraData(id) {
+        const panel = document.getElementById('custom-h2h-panel');
+        panel.innerHTML = '<div class="text-center text-info">Pobieranie analizy...</div>';
+
+        try {
+          // 1. Pobieramy info o meczu (dla sędziego i ID drużyn)
+          const fixRes = await fetch(`https://v3.football.api-sports.io/fixtures?id=${id}`, {
+            headers: { "x-apisports-key": API_KEY }
           });
-        });
+          const fixData = await fixRes.json();
+          const fixture = fixData.response[0];
+          
+          const sedzia = fixture.fixture.referee || "Brak danych";
+          const team1 = fixture.teams.home;
+          const team2 = fixture.teams.away;
 
-        observer.observe(gameWidget, { attributes: true });
+          // 2. Pobieramy H2H
+          const h2hRes = await fetch(`https://v3.football.api-sports.io/fixtures/headtohead?h2h=${team1.id}-${team2.id}&last=5`, {
+            headers: { "x-apisports-key": API_KEY }
+          });
+          const h2hData = await h2hRes.json();
+          const matches = h2hData.response;
+
+          // 3. Budujemy wygląd
+          let h2hHtml = `<div class="mb-3"><strong>👨‍⚖️ Sędzia:</strong> <span class="text-warning">${sedzia}</span></div>`;
+          h2hHtml += `<h6>Ostatnie 5 starć H2H:</h6><ul class="list-group list-group-flush">`;
+          
+          matches.forEach(m => {
+            const date = new Date(m.fixture.date).toLocaleDateString('pl-PL');
+            h2hHtml += `
+              <li class="list-group-item bg-dark text-white p-1 border-secondary" style="font-size: 0.85rem;">
+                <small>${date}</small><br>
+                ${m.teams.home.name} <strong>${m.goals.home}:${m.goals.away}</strong> ${m.teams.away.name}
+              </li>`;
+          });
+          h2hHtml += `</ul>`;
+          
+          panel.innerHTML = h2hHtml;
+
+        } catch (err) {
+          panel.innerHTML = '<div class="text-danger">Błąd podczas pobierania danych H2H.</div>';
+        }
       }
     });
   </script>
