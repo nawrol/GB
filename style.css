@@ -6,28 +6,23 @@ body { margin: 0; background-color: #f4f6f9; }
   transition: background-color 0.2s ease-in-out;
 }
 
-/* SMARTFONY */
-#collapseLeagues api-sports-widget, 
-#games-list api-sports-widget { 
-  max-height: 55vh; 
-  overflow-y: auto; 
+/* Zapewnienie poprawnego działania wyskakujących okien (Modali) */
+.api-sports-modal {
+    z-index: 2000 !important;
 }
 
-/* DESKTOPY */
+/* SMARTFONY - większa czytelność listy meczów */
+@media (max-width: 767px) {
+    #games-list api-sports-widget { 
+        max-height: 70vh; 
+        overflow-y: auto; 
+    }
+}
+
+/* DESKTOPOWE - układ */
 @media (min-width: 768px) {
-  #game-content, #leagues-card { 
-    position: sticky; 
-    top: 80px; 
-    overflow-y: auto; 
-  }
-
-  #games-list api-sports-widget, 
-  #collapseLeagues api-sports-widget { 
+  #games-list api-sports-widget { 
     max-height: calc(100vh - 150px); 
-  }
-
-  #team-content api-sports-widget { 
-    max-height: 40vh; 
-    overflow-y: auto;
+    overflow-y: auto; 
   }
 }
