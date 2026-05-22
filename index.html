@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GB SCORE - Statystyki i Wyniki Piłkarskie Na Żywo</title>
+    <title>GB SCORE - Centrum Analityczne</title>
     
-    <!-- Skrypt API-Sports v3 -->
     <script type="module" src="https://widgets.api-sports.io/3.1.0/widgets.js"></script>
     
     <style>
@@ -22,66 +21,69 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
-            padding: 0;
+            padding: 20px;
         }
 
         header {
-            background-color: var(--panel-bg);
-            border-bottom: 1px solid var(--border-color);
-            padding: 20px;
             text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            margin-bottom: 40px;
         }
 
         header h1 {
             color: var(--primary-color);
             margin: 0;
-            font-size: 2rem;
+            font-size: 2.5rem;
             letter-spacing: 2px;
-            text-transform: uppercase;
         }
 
         .container {
-            max-width: 1400px;
-            margin: 20px auto;
-            padding: 0 20px;
-            display: grid;
-            /* Lewa kolumna szersza (mecze), prawa węższa (tabela) */
-            grid-template-columns: 2fr 1fr; 
-            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        .widget-section {
+        /* Stylizacja Akordeonów (Rozwijanych paneli) */
+        details {
             background-color: var(--panel-bg);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            height: fit-content;
-        }
-
-        .widget-section h2 {
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 10px;
-            margin-top: 0;
-            color: #fff;
-            font-size: 1.2rem;
-        }
-
-        .helper-text {
-            font-size: 0.85rem;
-            color: #8b949e;
             margin-bottom: 15px;
-            line-height: 1.4;
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
-        /* Responsywność dla ekranów mobilnych */
-        @media (max-width: 1024px) {
-            .container {
-                grid-template-columns: 1fr;
-            }
+        summary {
+            padding: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            list-style: none; /* Ukrywa domyślną strzałkę */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1c2128;
+            color: #fff;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary:after {
+            content: '▼';
+            font-size: 0.9rem;
+            color: var(--primary-color);
+        }
+
+        details[open] summary:after {
+            content: '▲';
+        }
+
+        .leagues-wrapper {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            border-top: 1px solid var(--border-color);
         }
     </style>
 </head>
@@ -89,53 +91,127 @@
 
     <header>
         <h1>GB SCORE</h1>
+        <p>Analiza Liderów i Weryfikacja Składów</p>
     </header>
 
-    <!-- 1. GŁÓWNA KONFIGURACJA ULTRA -->
-    <!-- Ładuje się raz, działa w tle dla wszystkich innych widgetów i okienek -->
+    <!-- KONFIGURACJA GŁÓWNA -->
     <api-sports-widget 
         data-type="config" 
         data-key="f3c7ed02b7e08d0364bd2eb4f56ab2a5" 
-        data-sport="football"
+        data-sport="football" 
         data-lang="pl"
         data-theme="dark"
         data-odds="true"
-        data-live="true"
-        data-show-logos="true">
+        data-live="true">
     </api-sports-widget>
 
-    <div class="container">
+    <div class="container" id="countries-list">
 
-        <!-- 2. CENTRUM MECZOWE (Hub dla H2H, Kursów, Rzutów rożnych i Heatmap) -->
-        <div class="widget-section">
-            <h2>📅 Centrum Meczowe (Live & Terminarz)</h2>
-            <p class="helper-text">
-                Kliknij w dowolny mecz, aby otworzyć zaawansowane szczegóły spotkania (Składy, Heatmapy, Kursy LIVE, H2H oraz Przewidywania).
-            </p>
-            <api-sports-widget 
-                data-type="games" 
-                data-date="today"
-                data-target-game="modal"
-                data-target-team="modal">
-            </api-sports-widget>
-        </div>
+        <h2>🔥 TOP 20 (Rozgrywki do 3. poziomu)</h2>
 
-        <!-- 3. TABELA LIGOWA (Hub dla profili drużyn, graczy i kontuzji) -->
-        <div class="widget-section">
-            <h2>🏆 Tabela Ligowa</h2>
-            <p class="helper-text">
-                Kliknij w wybraną drużynę, aby sprawdzić jej pełną kadrę, listę kontuzjowanych oraz szczegółowe statystyki zawodników.
-            </p>
-            <!-- Domyślnie ładuje Premier League (ID 39), można zmienić ID na dowolną inną -->
-            <api-sports-widget 
-                data-type="standings" 
-                data-league="39" 
-                data-season="2025"
-                data-target-team="modal">
-            </api-sports-widget>
-        </div>
+        <!-- ANGLIA -->
+        <details>
+            <summary>🏴󠁧󠁢󠁥󠁮󠁧󠁿 Anglia</summary>
+            <!-- data-leagues zawiera ID lig oddzielone przecinkiem (Premier League, Championship, League One) -->
+            <div class="leagues-wrapper" data-leagues="39,40,41"></div>
+        </details>
+
+        <!-- HISZPANIA -->
+        <details>
+            <summary>🇪🇸 Hiszpania</summary>
+            <!-- La Liga, Segunda, Primera RFEF -->
+            <div class="leagues-wrapper" data-leagues="140,141,142"></div>
+        </details>
+
+        <!-- NIEMCY -->
+        <details>
+            <summary>🇩🇪 Niemcy</summary>
+            <div class="leagues-wrapper" data-leagues="78,79,80"></div>
+        </details>
+
+        <!-- WŁOCHY -->
+        <details>
+            <summary>🇮🇹 Włochy</summary>
+            <div class="leagues-wrapper" data-leagues="135,136,137"></div>
+        </details>
+
+        <!-- FRANCJA -->
+        <details>
+            <summary>🇫🇷 Francja</summary>
+            <div class="leagues-wrapper" data-leagues="61,62,63"></div>
+        </details>
+
+        <!-- POLSKA -->
+        <details>
+            <summary>🇵🇱 Polska</summary>
+            <div class="leagues-wrapper" data-leagues="253,254,255"></div>
+        </details>
+
+        <!-- HOLANDIA -->
+        <details>
+            <summary>🇳🇱 Holandia</summary>
+            <div class="leagues-wrapper" data-leagues="88,89,90"></div>
+        </details>
+
+        <!-- PORTUGALIA -->
+        <details>
+            <summary>🇵🇹 Portugalia</summary>
+            <div class="leagues-wrapper" data-leagues="94,95,96"></div>
+        </details>
+
+
+        <h2 style="margin-top: 50px;">🎯 KOLEJNE 10 (Rozgrywki do 2. poziomu)</h2>
+
+        <!-- TURCJA -->
+        <details>
+            <summary>🇹🇷 Turcja</summary>
+            <div class="leagues-wrapper" data-leagues="203,204"></div>
+        </details>
+
+        <!-- SZKOCJA -->
+        <details>
+            <summary>🏴󠁧󠁢󠁳󠁣󠁴󠁿 Szkocja</summary>
+            <div class="leagues-wrapper" data-leagues="179,180"></div>
+        </details>
+        
+        <!-- BELGIA -->
+        <details>
+            <summary>🇧🇪 Belgia</summary>
+            <div class="leagues-wrapper" data-leagues="144,145"></div>
+        </details>
 
     </div>
+
+    <!-- SILNIK LENIWEGO ŁADOWANIA WIDŻETÓW -->
+    <script>
+        // Skrypt nasłuchuje kliknięcia w dany kraj. Gdy go otworzysz, generuje widżety.
+        document.querySelectorAll('details').forEach(detail => {
+            detail.addEventListener('toggle', function() {
+                // Sprawdza, czy panel został otwarty i czy dane nie zostały już pobrane
+                if (this.open && !this.dataset.loaded) {
+                    const wrapper = this.querySelector('.leagues-wrapper');
+                    const leagues = wrapper.dataset.leagues.split(',');
+                    
+                    // Dla każdego ID ligi generuje fizyczny widget API-Sports
+                    leagues.forEach(leagueId => {
+                        const widget = document.createElement('api-sports-widget');
+                        widget.setAttribute('data-type', 'games');
+                        widget.setAttribute('data-date', 'today');
+                        widget.setAttribute('data-league', leagueId.trim());
+                        
+                        // Modale Ultra - wszystko ładuje się w nakładce po kliknięciu
+                        widget.setAttribute('data-target-game', 'modal');
+                        widget.setAttribute('data-target-team', 'modal');
+                        
+                        wrapper.appendChild(widget);
+                    });
+                    
+                    // Zabezpieczenie przed ponownym generowaniem tych samych widżetów
+                    this.dataset.loaded = 'true';
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
