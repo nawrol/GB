@@ -1,28 +1,19 @@
-body { margin: 0; background-color: #f4f6f9; }
-.container-fluid, .content { max-width: 1440px; margin: auto; }
+body { background-color: #121212; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; }
+.card { border-radius: 12px; }
+.card-header { background: #1f1f1f; border-bottom: 2px solid #198754; }
+.navbar { border-bottom: 3px solid #198754; }
 
-.card-header[data-bs-toggle="collapse"]:hover {
-  background-color: #146c43 !important;
-  transition: background-color 0.2s ease-in-out;
-}
+/* Scrollbar dla widgetów */
+#games-list, #game-target { max-height: 80vh; overflow-y: auto; }
 
-/* Zapewnienie poprawnego działania wyskakujących okien (Modali) */
-.api-sports-modal {
-    z-index: 2000 !important;
-}
+/* Stylizacja widgetów API */
+api-sports-widget { display: block; width: 100%; }
 
-/* SMARTFONY - większa czytelność listy meczów */
-@media (max-width: 767px) {
-    #games-list api-sports-widget { 
-        max-height: 70vh; 
-        overflow-y: auto; 
-    }
-}
+/* Green Beans Accents */
+.btn-outline-success { border-color: #198754; color: #198754; }
+.btn-outline-success:hover { background: #198754; color: white; }
 
-/* DESKTOPOWE - układ */
-@media (min-width: 768px) {
-  #games-list api-sports-widget { 
-    max-height: calc(100vh - 150px); 
-    overflow-y: auto; 
-  }
+/* Responsywność */
+@media (max-width: 992px) {
+  .sticky-top { position: static; }
 }
