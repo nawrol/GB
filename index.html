@@ -26,33 +26,29 @@
   <div class="container-fluid content p-3">
     <div class="row g-3">
 
-      <!-- LEWA KOLUMNA -->
+      <!-- Lewa kolumna - Ligi + Tabela -->
       <div class="col-lg-3">
         <div class="card bg-dark border-success mb-3">
           <div class="card-header bg-success fw-bold">Ligi</div>
           <div class="card-body p-0"><api-sports-widget data-type="leagues"></api-sports-widget></div>
         </div>
-
         <div class="card bg-dark border-success">
           <div class="card-header bg-success fw-bold">Tabela</div>
           <div class="card-body p-0"><api-sports-widget data-type="standings"></api-sports-widget></div>
         </div>
       </div>
 
-      <!-- GŁÓWNA KOLUMNA -->
+      <!-- Główna kolumna -->
       <div class="col-lg-6">
-        <div id="main-content">
-          <!-- Dzisiaj / Predykcje / Tabele będą podmieniane przez JS -->
-          <div class="card bg-dark border-success">
-            <div class="card-header bg-success fw-bold" id="main-header">Dzisiejsze Mecze</div>
-            <div class="card-body p-0">
-              <div id="games-list"><api-sports-widget data-type="games"></api-sports-widget></div>
-            </div>
+        <div class="card bg-dark border-success">
+          <div class="card-header bg-success fw-bold" id="main-header">Dzisiejsze Mecze</div>
+          <div class="card-body p-0" id="games-list">
+            <api-sports-widget data-type="games"></api-sports-widget>
           </div>
         </div>
       </div>
 
-      <!-- PRAWA KOLUMNA -->
+      <!-- Prawa kolumna -->
       <div class="col-lg-3">
         <div class="card bg-dark border-success mb-3">
           <div class="card-header bg-success fw-bold">H2H</div>
@@ -69,7 +65,7 @@
     </div>
   </div>
 
-  <!-- MODAL -->
+  <!-- Modal -->
   <div class="modal fade" id="matchModal" tabindex="-1">
     <div class="modal-dialog modal-xl">
       <div class="modal-content bg-dark text-light border-success">
@@ -82,16 +78,24 @@
     </div>
   </div>
 
-  <!-- CONFIG WIDGET -->
+  <!-- GŁÓWNA KONFIGURACJA WIDGETU -->
   <api-sports-widget 
     data-type="config" 
     data-sport="football" 
     data-key="f3c7ed02b7e08d0364bd2eb4f56ab2a5" 
     data-lang="pl" 
     data-theme="dark" 
+    data-odds="true"
+    data-odds-provider="all"
+    data-show-predictions="true"
     data-show-logos="true" 
     data-refresh="20" 
     data-favorite="true"
+    data-player-injuries="true" 
+    data-team-squad="true" 
+    data-team-statistics="true" 
+    data-player-statistics="true" 
+    data-target-league="#games-list"
     data-target-game="modal"
     data-target-team="modal"
     data-target-player="modal">
